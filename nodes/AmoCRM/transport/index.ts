@@ -7,20 +7,19 @@ export async function apiRequest(
 	method: IHttpRequestMethods,
 	endpoint: string,
 	body: IDataObject | GenericValue | GenericValue[] = {},
-	query: IDataObject = {},
+	qs: IDataObject = {},
 ) {
 	const credentials = await this.getCredentials('amocrmOAuth2Api');
 
 	const options: IHttpRequestOptions = {
 		method,
 		body,
-		qs: query,
+		qs,
 		url: `https://${credentials.subdomain}.amocrm.ru/api/v4/${endpoint}`,
 		headers: {
 			'content-type': 'application/json; charset=utf-8',
 		},
 	};
-
 	return this.helpers.httpRequestWithAuthentication.call(this, 'amocrmOAuth2Api', options);
 }
 
@@ -35,7 +34,7 @@ export async function apiRequestAllItems(
 
 	let responseData;
 	query.page = 1;
-	query.limit = 250;
+	query.limit = query.limit ? query.limit : 250;
 
 	do {
 		responseData = await apiRequest.call(this, method, endpoint, body, query);

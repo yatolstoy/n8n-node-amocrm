@@ -35,26 +35,18 @@ export const description: ILeadsProperties = [
 				description: 'Search query',
 			},
 			{
-				displayName: 'Lead Ids',
-				name: 'leadIds',
-				type: 'number',
-				typeOptions: {
-					multipleValues: true,
-					multipleValueButtonText: 'Add ID',
-				},
-				default: [],
-				description: 'Unique lead identifiers.',
+				displayName: 'List of lead ids',
+				name: 'id',
+				type: 'string',
+				default: '',
+				description: 'Lead IDs separated by commas',
 			},
 			{
-				displayName: 'Name`s',
-				name: 'names',
+				displayName: 'List of names',
+				name: 'name',
 				type: 'string',
-				typeOptions: {
-					multipleValues: true,
-					multipleValueButtonText: 'Add name',
-				},
-				default: [],
-				description: 'Unique lead identifiers.',
+				default: '',
+				description: 'Names separated by commas',
 			},
 			{
 				displayName: 'Price',
@@ -100,8 +92,8 @@ export const description: ILeadsProperties = [
 			},
 			{
 				displayName: 'Statuses',
-				name: 'option',
-				type: 'fixedCollection',
+				name: 'statuses',
+				type: 'multiOptions',
 				default: [],
 				description: 'Select statuses',
 				options: [],
@@ -110,7 +102,6 @@ export const description: ILeadsProperties = [
 				},
 				noDataExpression: true,
 			},
-
 			{
 				displayName: 'Created by users',
 				name: 'created_by',
@@ -268,34 +259,6 @@ export const description: ILeadsProperties = [
 					},
 				],
 			},
-			{
-				displayName: 'Custom fields',
-				name: 'custom_fields_values',
-				type: 'collection',
-				placeholder: 'Select custom field',
-				default: [],
-				options: [
-					{
-						displayName: 'Custom field',
-						name: 'cf_name',
-						type: 'string',
-						default: '',
-					},
-					{
-						displayName: 'Custom field2',
-						name: 'cf_name2',
-						values: [
-							{
-								displayName: 'Value field',
-								name: 'cf_value',
-								type: 'string',
-								required: true,
-								default: '',
-							},
-						],
-					},
-				],
-			},
 		],
 	},
 	{
@@ -303,7 +266,7 @@ export const description: ILeadsProperties = [
 		name: 'options',
 		type: 'collection',
 		placeholder: 'Add Option',
-		default: {},
+		default: { sortSettings: { sort_by: 'created_at', sort_order: 'asc' } },
 		displayOptions: {
 			show: {
 				resource: ['leads'],
@@ -340,7 +303,8 @@ export const description: ILeadsProperties = [
 										value: 'id',
 									},
 								],
-								default: 'created_at',
+								default: '',
+								required: true,
 								description: 'Field to sort records by',
 							},
 							{
@@ -357,7 +321,8 @@ export const description: ILeadsProperties = [
 										value: 'desc',
 									},
 								],
-								default: 'desc',
+								default: '',
+								required: true,
 								description: 'Ascending or descending order sort order',
 							},
 						],
@@ -401,11 +366,9 @@ export const description: ILeadsProperties = [
 		],
 	},
 	{
-		displayName: 'Pagination',
-		name: 'pagination',
-		type: 'collection',
-		placeholder: 'Add pagination option',
-		default: {},
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
 		displayOptions: {
 			show: {
 				resource: ['leads'],
@@ -413,26 +376,22 @@ export const description: ILeadsProperties = [
 				returnAll: [false],
 			},
 		},
-		options: [
-			{
-				displayName: 'Page',
-				name: 'page',
-				type: 'number',
-				default: 1,
-				description: 'Select page',
-			},
-			{
-				displayName: 'Limit',
-				name: 'limit',
-				type: 'number',
-				typeOptions: {
-					maxValue: 250,
-					minValue: 0,
-					numberStepSize: 1,
-				},
-				default: 50,
-				description: 'Select limit of count leads',
-			},
-		],
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 1,
+		description: 'Select page',
+	},
+	{
+		displayName: 'Limit',
+		name: 'limit',
+		type: 'number',
+		typeOptions: {
+			maxValue: 250,
+			minValue: 1,
+			numberStepSize: 1,
+		},
+		default: 50,
+		description: 'Select limit of count leads',
 	},
 ];
