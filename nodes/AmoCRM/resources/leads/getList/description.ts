@@ -386,6 +386,12 @@ export const description: ILeadsProperties = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
+		displayOptions: {
+			show: {
+				operation: ['getList'],
+				resource: ['leads'],
+			},
+		},
 		typeOptions: {
 			maxValue: 250,
 			minValue: 1,

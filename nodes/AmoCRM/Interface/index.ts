@@ -2,6 +2,8 @@ export * from './user';
 export * from './pipeline';
 export * from './status';
 export * from './leadCustomField';
+export * from './lossReason';
+export * from './tags';
 
 export interface IResponseData<S extends string, T> {
 	_total_items: number;

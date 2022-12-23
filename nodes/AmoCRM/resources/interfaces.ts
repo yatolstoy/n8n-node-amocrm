@@ -2,7 +2,7 @@ import { AllEntities, Entity, PropertiesOf } from 'n8n-workflow';
 
 type IAmoMap = {
 	account: 'getInfo';
-	leads: 'getList';
+	leads: 'getList' | 'create';
 	// channel: 'addUser' | 'create' | 'delete' | 'members' | 'restore' | 'statistics' | 'search';
 	// message: 'delete' | 'post' | 'postEphemeral';
 	// reaction: 'create' | 'delete' | 'getAll';

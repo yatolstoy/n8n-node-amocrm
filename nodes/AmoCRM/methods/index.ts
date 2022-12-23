@@ -1,5 +1,13 @@
 import { ILoadOptionsFunctions, INodePropertyOptions, NodeOperationError } from 'n8n-workflow';
-import { IAmoUser, ICustomField, IPipeline, IResponseData, IStatus } from '../Interface';
+import {
+	IAmoUser,
+	ICustomField,
+	ILossReason,
+	IPipeline,
+	IResponseData,
+	IStatus,
+	ITag,
+} from '../Interface';
 import { apiRequest, apiRequestAllItems } from '../transport';
 
 export async function getPipelines(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
@@ -87,7 +95,49 @@ export async function getCustomFields(
 	}
 
 	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const lrResponseData: Array<IResponseData<'loss_reasons', ILossReason>> =
+		await apiRequestAllItems.call(this, 'GET', 'leads/loss_reasons', {});
+
+	const lossReasons = lrResponseData.reduce((acc: ILossReason[], response) => {
+		acc.push(...response._embedded.loss_reasons);
+		return acc;
+	}, []);
+
+	if (!lossReasons?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return lossReasons.map((field) => ({
 		name: field.name,
+		value: field.id,
+	}));
+}
+
+export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const tagsResponseData: Array<IResponseData<'tags', ITag>> = await apiRequestAllItems.call(
+		this,
+		'GET',
+		'leads/tags',
+		{},
+	);
+
+	const tags = tagsResponseData.reduce((acc: ITag[], response) => {
+		acc.push(...response._embedded.tags);
+		return acc;
+	}, []);
+
+	if (!tags?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return tags.map((field) => ({
+		name: field.name.length > 30 ? `${field.name.slice(0, 30)}...` : field.name,
 		value: field.id,
 	}));
 }

@@ -3,7 +3,7 @@ import { ILinks } from '.';
 export interface ICustomField {
 	id: number;
 	name: string;
-	type: TypeField;
+	type: ITypeField;
 	account_id: number;
 	code: string;
 	sort: number;
@@ -28,7 +28,7 @@ interface RequiredStatus {
 	status_id: number;
 }
 
-type TypeField =
+export type ITypeField =
 	| 'text'
 	| 'numeric'
 	| 'checkbox'
