@@ -1,4 +1,2 @@
-import { execute } from './execute';
-import { description } from './description';
-
-export { description, execute };
+export { execute } from './execute';
+export { description } from './description';
