@@ -1,147 +1,144 @@
 import { IExecuteFunctions } from 'n8n-core';
 
-import { IDataObject, INodeExecutionData } from 'n8n-workflow';
+import { INodeExecutionData } from 'n8n-workflow';
+import { ITypeField } from '../../../Interface';
 
-import { apiRequest, apiRequestAllItems } from '../../../transport';
+import { apiRequest } from '../../../transport';
 
-interface IFilter {
-	id?: number[];
-	name?: string[];
-	price?: INumRange;
-	pipelines?: number[];
-	statuses?: number[];
-	created_by?: number[];
-	updated_by?: number[];
-	responsible_user_id?: number[];
-	created_at: INumRange;
-	updated_at: INumRange;
-	closed_at: INumRange;
-	closest_task_at: INumRange;
-}
-
-interface IStringRange {
-	from: string;
-	to: string;
-}
-
-interface INumRange {
-	from: number;
-	to: number;
-}
-
-interface FilterFromFrontend {
-	query?: string;
-	id?: string;
-	name?: string;
-	price?: {
-		rangeCustom: INumRange;
-	};
-	pipelines?: number[];
-	statuses?: number[];
-	created_by?: number[];
-	updated_by?: number[];
-	responsible_user_id?: number[];
-	created_at?: {
-		dateRangeCustomProperties: IStringRange;
-	};
-	updated_at?: {
-		dateRangeCustomProperties: IStringRange;
-	};
-	closed_at?: {
-		dateRangeCustomProperties: IStringRange;
-	};
-	closest_task_at?: {
-		dateRangeCustomProperties: IStringRange;
-	};
+interface IFormLead {
+	lead: Array<{
+		name?: string;
+		price?: number;
+		pipeline_id?: number | number[];
+		status_id?: number | number[];
+		created_by?: number | number[];
+		updated_by?: number | number[];
+		responsible_user_id?: number | number[];
+		closed_at?: string;
+		created_at?: string;
+		updated_at?: string;
+		loss_reason_id?: number | number[];
+		custom_fields_values?: {
+			custom_field: { data: string; value: string; enum_id: number; enum_code: string }[];
+		};
+		_embedded?: {
+			tags?: {
+				id: number[];
+			}[];
+			contacts?: {
+				id: {
+					contact: {
+						id: number;
+						isMain: boolean;
+					}[];
+				};
+			}[];
+			companies?: {
+				id: {
+					company: {
+						id: number;
+					}[];
+				};
+			}[];
+			source?: {
+				external_id: number;
+				type: string;
+			}[];
+		};
+	}>;
 }
 
 export async function execute(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	const body = {} as IDataObject;
-	const qs = {} as IDataObject;
-
-	//--------------------------------Add filter--------------------------------------
-
-	const filter = this.getNodeParameter('filter', 0) as FilterFromFrontend;
-	if (filter.query?.length) qs.query = filter.query;
-
-	const filterWithoutQuery = JSON.parse(JSON.stringify(filter)) as FilterFromFrontend;
-	delete filterWithoutQuery.query;
-
-	if (Object.keys(filterWithoutQuery).length) {
-		qs.filter = {
-			...filterWithoutQuery,
-			id: filterWithoutQuery.id?.split(',').map((el) => Number(el.trim())),
-			name: filterWithoutQuery.name?.split(',').map((el) => el.trim()),
-			price: filterWithoutQuery.price?.rangeCustom,
-			created_at: makeRangeProperty(filterWithoutQuery.created_at?.dateRangeCustomProperties),
-			updated_at: makeRangeProperty(filterWithoutQuery.updated_at?.dateRangeCustomProperties),
-			closest_task_at: makeRangeProperty(
-				filterWithoutQuery.closest_task_at?.dateRangeCustomProperties,
-			),
-			closed_at: makeRangeProperty(filterWithoutQuery.closed_at?.dateRangeCustomProperties),
-		} as IFilter;
-	}
-
-	//---------------------------------------------------------------------------------
-
-	//--------------------------------Add options--------------------------------------
-	const options = this.getNodeParameter('options', 0) as {
-		sort: {
-			sortSettings: {
-				sort_by: string;
-				sort_order: string;
-			};
-		};
-		with?: string[];
-	};
-	qs.with = options.with ? options.with.join(',') : undefined;
-
-	if (options.sort?.sortSettings) {
-		qs.order = {
-			[options.sort.sortSettings.sort_by]: options.sort.sortSettings.sort_order,
-		};
-	}
-	//---------------------------------------------------------------------------------
-
-	const returnAll = this.getNodeParameter('returnAll', 0) as boolean;
-
-	//------------------------------Add pagination-------------------------------------
-	if (!returnAll) {
-		const page = this.getNodeParameter('page', 0) as number;
-		qs.page = page;
-	}
-	const limit = this.getNodeParameter('limit', 0) as number;
-	qs.limit = limit;
-
-	//---------------------------------------------------------------------------------
-
-	const requestMethod = 'GET';
+	const requestMethod = 'POST';
 	const endpoint = `leads`;
 
-	if (returnAll) {
-		const responseData = await await apiRequestAllItems.call(
+	const jsonParams = (await this.getNodeParameter('json', 0)) as boolean;
+
+	if (jsonParams) {
+		const jsonString = (await this.getNodeParameter('jsonString', 0)) as string;
+		const responseData = await apiRequest.call(
 			this,
 			requestMethod,
 			endpoint,
-			body,
-			qs,
+			JSON.parse(jsonString),
 		);
 		return this.helpers.returnJsonArray(responseData);
 	}
 
-	const responseData = await apiRequest.call(this, requestMethod, endpoint, body, qs);
-	return this.helpers.returnJsonArray(responseData);
-}
+	const leadsCollection = (await this.getNodeParameter('collection', 0)) as IFormLead;
 
-function makeRangeProperty(obj: IStringRange | undefined): INumRange | undefined {
-	if (!obj) return undefined;
-	const from = Math.round(new Date(obj?.from).valueOf() / 1000);
-	const to = Math.round(new Date(obj?.to).valueOf() / 1000);
-	return {
-		from,
-		to,
-	};
+	const body = leadsCollection.lead.map((lead) => ({
+		...lead,
+		custom_fields_values: lead.custom_fields_values?.custom_field?.reduce(
+			(
+				acc: {
+					field_id: number;
+					values: { value?: number | boolean | string; enum_id?: number; enum_code?: string }[];
+				}[],
+				cf,
+			) => {
+				let value, enum_id, enum_code;
+				const data = JSON.parse(cf.data) as { id: number; type: ITypeField };
+				switch (data.type) {
+					case 'checkbox':
+						value = Boolean(cf.value);
+						break;
+					case 'date':
+					case 'date_time':
+					case 'birthday':
+						value = Number(cf.value);
+						break;
+					case 'text':
+					case 'numeric':
+					case 'textarea':
+					case 'textarea':
+					case 'price':
+					case 'streetaddress':
+					case 'tracking_data':
+					case 'monetary':
+					case 'url':
+						value = String(cf.value);
+						break;
+					case 'select':
+					case 'multiselect':
+					case 'radiobutton':
+					case 'category':
+						value = String(cf.value);
+						enum_id = Number(cf.enum_id);
+						enum_code = String(cf.enum_code);
+					default:
+						break;
+				}
+				if (!value && !enum_id && !enum_code) return acc;
+				const existRecord = acc.filter((el) => el.field_id === data.id);
+				if (existRecord.length) {
+					const values = [...existRecord[0].values, { value, enum_id, enum_code }];
+					acc = [
+						...acc.filter((el) => el.field_id !== data.id),
+						{ field_id: existRecord[0].field_id, values },
+					];
+				} else {
+					acc.push({ field_id: data.id, values: [{ value }] });
+				}
+				return acc;
+			},
+			[],
+		),
+		_embedded: {
+			...lead._embedded,
+			tags: lead._embedded?.tags?.flatMap((group) => group.id.map((id) => ({ id }))),
+			contacts: lead._embedded?.contacts?.flatMap((group) =>
+				group.id.contact.flatMap((contact) => contact),
+			),
+			companies: lead._embedded?.companies?.flatMap((group) =>
+				group.id.company.flatMap((company) => company),
+			),
+			source: lead._embedded?.source?.filter((_, i) => i === 0),
+		},
+	}));
+	const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
+	return this.helpers.returnJsonArray(responseData);
 }

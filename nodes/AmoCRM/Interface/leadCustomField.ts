@@ -46,4 +46,6 @@ export type ITypeField =
 	| 'tracking_data'
 	| 'chained_list'
 	| 'monetary'
-	| 'file';
+	| 'file'
+	| 'price'
+	| 'category';

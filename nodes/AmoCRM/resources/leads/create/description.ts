@@ -14,8 +14,8 @@ export const description: ILeadsProperties = [
 		default: false,
 	},
 	{
-		displayName: 'Array of objects',
-		name: 'name',
+		displayName: 'Stringifyed array of objects',
+		name: 'jsonString',
 		type: 'string',
 		default: '={{JSON.stringify([{name: "example"}])}}',
 		displayOptions: {
@@ -28,7 +28,7 @@ export const description: ILeadsProperties = [
 	},
 	{
 		displayName: 'Leads',
-		name: 'leads',
+		name: 'collection',
 		placeholder: 'Add lead',
 		type: 'fixedCollection',
 		default: [],
@@ -45,19 +45,19 @@ export const description: ILeadsProperties = [
 		options: [
 			{
 				displayName: 'Lead',
-				name: 'leads',
+				name: 'lead',
 				values: [
 					{
 						displayName: 'Name',
 						name: 'name',
 						type: 'string',
-						default: '',
+						default: undefined,
 					},
 					{
 						displayName: 'Price',
 						name: 'price',
 						type: 'number',
-						default: '',
+						default: undefined,
 					},
 					{
 						displayName: 'Pipeline',
@@ -116,19 +116,19 @@ export const description: ILeadsProperties = [
 						displayName: 'Closed at',
 						name: 'closed_at',
 						type: 'dateTime',
-						default: '',
+						default: undefined,
 					},
 					{
 						displayName: 'Created at',
 						name: 'created_at',
 						type: 'dateTime',
-						default: '',
+						default: undefined,
 					},
 					{
 						displayName: 'Updated at',
 						name: 'updated_at',
 						type: 'dateTime',
-						default: '',
+						default: undefined,
 					},
 					{
 						displayName: 'Loss reason',
@@ -145,7 +145,7 @@ export const description: ILeadsProperties = [
 						name: 'custom_fields_values',
 						placeholder: 'Add custom field',
 						type: 'fixedCollection',
-						default: {},
+						default: undefined,
 						typeOptions: {
 							multipleValues: true,
 						},
@@ -156,7 +156,7 @@ export const description: ILeadsProperties = [
 								values: [
 									{
 										displayName: 'Name',
-										name: 'custom_field_name',
+										name: 'data',
 										type: 'options',
 										typeOptions: {
 											loadOptionsMethod: 'getCustomFields',
@@ -165,11 +165,22 @@ export const description: ILeadsProperties = [
 										required: true,
 									},
 									{
+										displayName: 'Enum id',
+										name: 'enum_id',
+										type: 'number',
+										default: null,
+									},
+									{
+										displayName: 'Enum code',
+										name: 'enum_code',
+										type: 'string',
+										default: '',
+									},
+									{
 										displayName: 'Value',
 										name: 'value',
 										type: 'string',
 										default: '',
-										required: true,
 									},
 								],
 							},
@@ -177,7 +188,7 @@ export const description: ILeadsProperties = [
 					},
 					{
 						displayName: 'Embedded',
-						name: 'Embedded',
+						name: '_embedded',
 						placeholder: 'Add custom embedded',
 						type: 'fixedCollection',
 						default: {},
