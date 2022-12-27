@@ -20,17 +20,7 @@ export async function apiRequest(
 			'content-type': 'application/json; charset=utf-8',
 		},
 	};
-	try {
-		const response = await this.helpers.httpRequestWithAuthentication.call(
-			this,
-			'amocrmOAuth2Api',
-			options,
-		);
-		return response;
-	} catch (error) {
-		console.log(error['cause']);
-		throw new Error(error);
-	}
+	return this.helpers.httpRequestWithAuthentication.call(this, 'amocrmOAuth2Api', options);
 }
 
 export async function apiRequestAllItems(
