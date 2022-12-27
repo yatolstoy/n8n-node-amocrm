@@ -1,21 +1,15 @@
 import { IAccountProperties } from '../../interfaces';
+import { addWithDescription } from '../../_components/WithDescription';
 
 export const accountGetInfoDescription: IAccountProperties = [
-	{
-		displayName: 'Added information',
-		name: 'additionalFields',
-		type: 'multiOptions',
-		placeholder: 'Add Field',
-		default: [],
-		description: 'Select the information to be added to the response',
-		noDataExpression: true,
-		displayOptions: {
+	addWithDescription(
+		{
 			show: {
 				resource: ['account'],
 				operation: ['getInfo'],
 			},
 		},
-		options: [
+		[
 			{
 				name: 'Chat service account ID',
 				value: 'amojo_id',
@@ -45,5 +39,5 @@ export const accountGetInfoDescription: IAccountProperties = [
 				value: 'datetime_settings',
 			},
 		],
-	},
+	),
 ];

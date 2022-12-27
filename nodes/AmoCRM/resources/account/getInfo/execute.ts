@@ -8,16 +8,13 @@ export async function getInfo(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	const additionalFields = this.getNodeParameter('additionalFields', 0) as IDataObject;
-	const body = {} as IDataObject;
 	const qs = {} as IDataObject;
+	const additionalFields = this.getNodeParameter('with', 0) as IDataObject;
 	qs.with =
 		Array.isArray(additionalFields) && additionalFields.length
 			? additionalFields.join(',')
 			: undefined;
-	const requestMethod = 'GET';
-	const endpoint = `account`;
-	const responseData = await apiRequest.call(this, requestMethod, endpoint, body, qs);
+	const responseData = await apiRequest.call(this, 'GET', `account`, {}, qs);
 
 	return this.helpers.returnJsonArray(responseData);
 }
