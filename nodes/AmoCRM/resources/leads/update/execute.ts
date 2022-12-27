@@ -8,6 +8,7 @@ import { apiRequest } from '../../../transport';
 
 interface IFormLead {
 	lead: Array<{
+		id?: number;
 		name?: string;
 		price?: number;
 		pipeline_id?: number | number[];
@@ -26,26 +27,8 @@ interface IFormLead {
 			tags?: {
 				id: number[];
 			}[];
-			contacts?: {
-				id: {
-					contact: {
-						id: number;
-						isMain: boolean;
-					}[];
-				};
-			}[];
-			companies?: {
-				id: {
-					company: {
-						id: number;
-					}[];
-				};
-			}[];
-			source?: {
-				external_id: number;
-				type: string;
-			}[];
 		};
+		request_id: string;
 	}>;
 }
 
@@ -53,7 +36,7 @@ export async function execute(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	const requestMethod = 'POST';
+	const requestMethod = 'PATCH';
 	const endpoint = `leads`;
 
 	const jsonParams = (await this.getNodeParameter('json', 0)) as boolean;
@@ -132,16 +115,11 @@ export async function execute(
 			_embedded: {
 				...lead._embedded,
 				tags: lead._embedded?.tags?.flatMap((group) => group.id.map((id) => ({ id }))),
-				contacts: lead._embedded?.contacts?.flatMap((group) =>
-					group.id.contact.flatMap((contact) => contact),
-				),
-				companies: lead._embedded?.companies?.flatMap((group) =>
-					group.id.company.flatMap((company) => company),
-				),
-				source: lead._embedded?.source?.filter((_, i) => i === 0),
 			},
 		}))
 		.map(clearNullableProps);
-	const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
-	return this.helpers.returnJsonArray(responseData);
+	console.log(body);
+	// const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
+	// return this.helpers.returnJsonArray(responseData);
+	return this.helpers.returnJsonArray([]);
 }
