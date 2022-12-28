@@ -30,7 +30,7 @@ export async function apiRequestAllItems(
 	body: IDataObject = {},
 	query: IDataObject = {},
 ) {
-	const returnData: any[] = [];
+	const returnData: IDataObject[] = [];
 
 	let responseData;
 	query.page = 1;
