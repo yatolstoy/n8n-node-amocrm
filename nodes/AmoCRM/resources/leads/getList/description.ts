@@ -1,5 +1,8 @@
 import { ILeadsProperties } from '../../interfaces';
+import { addDateRangeDescription } from '../../_components/DateRangeDescription';
+import { addFilterDescription } from '../../_components/FilterDescription';
 import { addLimitDescription } from '../../_components/LimitDescription';
+import { addNumRangeDescription } from '../../_components/NumRangeDescription';
 import { addPageDescription } from '../../_components/PageDescription';
 import { addReturnAll } from '../../_components/ReturnAllDescription';
 import { addSortDescription } from '../../_components/SortDescription';
@@ -12,19 +15,14 @@ export const description: ILeadsProperties = [
 			operation: ['getList'],
 		},
 	}),
-	{
-		displayName: 'Filter',
-		name: 'filter',
-		type: 'collection',
-		placeholder: 'Add filter',
-		default: {},
-		displayOptions: {
+	addFilterDescription(
+		{
 			show: {
 				resource: ['leads'],
 				operation: ['getList'],
 			},
 		},
-		options: [
+		[
 			{
 				displayName: 'Query',
 				name: 'query',
@@ -46,37 +44,7 @@ export const description: ILeadsProperties = [
 				default: '',
 				description: 'Names separated by commas',
 			},
-			{
-				displayName: 'Price',
-				name: 'price',
-				placeholder: 'Add Range',
-				type: 'fixedCollection',
-				default: {},
-				options: [
-					{
-						displayName: 'Range',
-						name: 'rangeCustom',
-						values: [
-							{
-								displayName: 'From',
-								name: 'from',
-								type: 'number',
-								required: true,
-								default: '',
-								description: 'Start number of the date range to filter results by',
-							},
-							{
-								displayName: 'To',
-								name: 'to',
-								type: 'number',
-								required: true,
-								default: '',
-								description: 'End number of the date range to filter results by',
-							},
-						],
-					},
-				],
-			},
+			addNumRangeDescription('Price', 'price'),
 			{
 				displayName: 'Pipelines',
 				name: 'pipelines',
@@ -133,132 +101,136 @@ export const description: ILeadsProperties = [
 				description: 'Select users',
 				noDataExpression: true,
 			},
-			{
-				displayName: 'Created at',
-				name: 'created_at',
-				placeholder: 'Add Date Range',
-				type: 'fixedCollection',
-				default: {},
-				options: [
-					{
-						displayName: 'Date Range Properties',
-						name: 'dateRangeCustomProperties',
-						values: [
-							{
-								displayName: 'From',
-								name: 'from',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'Start date of the date range to filter results by',
-							},
-							{
-								displayName: 'To',
-								name: 'to',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'End date of the date range to filter results by',
-							},
-						],
-					},
-				],
-			},
-			{
-				displayName: 'Updated at',
-				name: 'updated_at',
-				placeholder: 'Add Date Range',
-				type: 'fixedCollection',
-				default: {},
-				options: [
-					{
-						displayName: 'Date Range Properties',
-						name: 'dateRangeCustomProperties',
-						values: [
-							{
-								displayName: 'From',
-								name: 'from',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'Start date of the date range to filter results by',
-							},
-							{
-								displayName: 'To',
-								name: 'to',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'End date of the date range to filter results by',
-							},
-						],
-					},
-				],
-			},
-			{
-				displayName: 'Closed at',
-				name: 'closed_at',
-				placeholder: 'Add Date Range',
-				type: 'fixedCollection',
-				default: {},
-				options: [
-					{
-						displayName: 'Date Range Properties',
-						name: 'dateRangeCustomProperties',
-						values: [
-							{
-								displayName: 'From',
-								name: 'from',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'Start date of the date range to filter results by',
-							},
-							{
-								displayName: 'To',
-								name: 'to',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'End date of the date range to filter results by',
-							},
-						],
-					},
-				],
-			},
-			{
-				displayName: 'Closest task at',
-				name: 'closest_task_at',
-				placeholder: 'Add Date Range',
-				type: 'fixedCollection',
-				default: {},
-				options: [
-					{
-						displayName: 'Date Range Properties',
-						name: 'dateRangeCustomProperties',
-						values: [
-							{
-								displayName: 'From',
-								name: 'from',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'Start date of the date range to filter results by',
-							},
-							{
-								displayName: 'To',
-								name: 'to',
-								type: 'dateTime',
-								required: true,
-								default: '',
-								description: 'End date of the date range to filter results by',
-							},
-						],
-					},
-				],
-			},
+			addDateRangeDescription('Created at', 'created_at'),
+			// {
+			// 	displayName: 'Created at',
+			// 	name: 'created_at',
+			// 	placeholder: 'Add Date Range',
+			// 	type: 'fixedCollection',
+			// 	default: {},
+			// 	options: [
+			// 		{
+			// 			displayName: 'Date Range Properties',
+			// 			name: 'dateRangeCustomProperties',
+			// 			values: [
+			// 				{
+			// 					displayName: 'From',
+			// 					name: 'from',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'Start date of the date range to filter results by',
+			// 				},
+			// 				{
+			// 					displayName: 'To',
+			// 					name: 'to',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'End date of the date range to filter results by',
+			// 				},
+			// 			],
+			// 		},
+			// 	],
+			// },
+			addDateRangeDescription('Updated at', 'updated_at'),
+			// {
+			// 	displayName: 'Updated at',
+			// 	name: 'updated_at',
+			// 	placeholder: 'Add Date Range',
+			// 	type: 'fixedCollection',
+			// 	default: {},
+			// 	options: [
+			// 		{
+			// 			displayName: 'Date Range Properties',
+			// 			name: 'dateRangeCustomProperties',
+			// 			values: [
+			// 				{
+			// 					displayName: 'From',
+			// 					name: 'from',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'Start date of the date range to filter results by',
+			// 				},
+			// 				{
+			// 					displayName: 'To',
+			// 					name: 'to',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'End date of the date range to filter results by',
+			// 				},
+			// 			],
+			// 		},
+			// 	],
+			// },
+			addDateRangeDescription('Closed at', 'closed_at'),
+			// {
+			// 	displayName: 'Closed at',
+			// 	name: 'closed_at',
+			// 	placeholder: 'Add Date Range',
+			// 	type: 'fixedCollection',
+			// 	default: {},
+			// 	options: [
+			// 		{
+			// 			displayName: 'Date Range Properties',
+			// 			name: 'dateRangeCustomProperties',
+			// 			values: [
+			// 				{
+			// 					displayName: 'From',
+			// 					name: 'from',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'Start date of the date range to filter results by',
+			// 				},
+			// 				{
+			// 					displayName: 'To',
+			// 					name: 'to',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'End date of the date range to filter results by',
+			// 				},
+			// 			],
+			// 		},
+			// 	],
+			// },
+			addDateRangeDescription('Closest task at', 'closest_task_at'),
+			// {
+			// 	displayName: 'Closest task at',
+			// 	name: 'closest_task_at',
+			// 	placeholder: 'Add Date Range',
+			// 	type: 'fixedCollection',
+			// 	default: {},
+			// 	options: [
+			// 		{
+			// 			displayName: 'Date Range Properties',
+			// 			name: 'dateRangeCustomProperties',
+			// 			values: [
+			// 				{
+			// 					displayName: 'From',
+			// 					name: 'from',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'Start date of the date range to filter results by',
+			// 				},
+			// 				{
+			// 					displayName: 'To',
+			// 					name: 'to',
+			// 					type: 'dateTime',
+			// 					required: true,
+			// 					default: '',
+			// 					description: 'End date of the date range to filter results by',
+			// 				},
+			// 			],
+			// 		},
+			// 	],
+			// },
 		],
-	},
+	),
 	{
 		displayName: 'Options',
 		name: 'options',
