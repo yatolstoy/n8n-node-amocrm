@@ -5,7 +5,10 @@ import { clearNullableProps } from '../../../helpers/clearNullableProps';
 
 import { apiRequest, apiRequestAllItems } from '../../../transport';
 
-export async function get(this: IExecuteFunctions, index: number): Promise<INodeExecutionData[]> {
+export async function execute(
+	this: IExecuteFunctions,
+	index: number,
+): Promise<INodeExecutionData[]> {
 	const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
 	const page = !returnAll ? (this.getNodeParameter('page', 0) as IDataObject) : undefined;
 	const limit = this.getNodeParameter('limit', 0) as IDataObject;

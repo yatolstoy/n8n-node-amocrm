@@ -1,4 +1,2 @@
-import { get as execute } from './execute';
-import { accountGetInfoDescription as description } from './description';
-
-export { description, execute };
+export { execute } from './execute';
+export { description } from './description';

@@ -1,7 +1,7 @@
 import { IAccountProperties } from '../../interfaces';
 import { addWithDescription } from '../../_components/WithDescription';
 
-export const accountGetInfoDescription: IAccountProperties = [
+export const description: IAccountProperties = [
 	addWithDescription(
 		{
 			show: {

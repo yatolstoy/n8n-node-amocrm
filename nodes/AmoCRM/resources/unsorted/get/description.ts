@@ -5,7 +5,7 @@ import { addLimitDescription } from '../../_components/LimitDescription';
 import { addPageDescription } from '../../_components/PageDescription';
 import { addFilterDescription } from '../../_components/FilterDescription';
 
-export const accountGetInfoDescription: IUnsortedProperties = [
+export const description: IUnsortedProperties = [
 	addReturnAll({
 		show: {
 			resource: ['unsorted'],
