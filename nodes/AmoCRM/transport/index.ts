@@ -1,6 +1,7 @@
 import { IExecuteFunctions, IHookFunctions, ILoadOptionsFunctions } from 'n8n-core';
 
 import { GenericValue, IDataObject, IHttpRequestMethods, IHttpRequestOptions } from 'n8n-workflow';
+import { IResponseData } from '../Interface';
 
 export async function apiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
@@ -30,7 +31,7 @@ export async function apiRequestAllItems(
 	body: IDataObject = {},
 	query: IDataObject = {},
 ) {
-	const returnData: IDataObject[] = [];
+	const returnData: any[] = [];
 
 	let responseData;
 	query.page = 1;

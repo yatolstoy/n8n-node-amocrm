@@ -78,8 +78,16 @@ export const description: IUnsortedProperties = [
 			operation: ['get'],
 		},
 	}),
-	addSortDescription([
-		{ name: 'Created at', value: 'created_at' },
-		{ name: 'Updated at', value: 'updated_at' },
-	]),
+	addSortDescription(
+		{
+			show: {
+				resource: ['unsorted'],
+				operation: ['get'],
+			},
+		},
+		[
+			{ name: 'Created at', value: 'created_at' },
+			{ name: 'Updated at', value: 'updated_at' },
+		],
+	),
 ];
