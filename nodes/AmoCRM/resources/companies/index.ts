@@ -13,27 +13,27 @@ export const descriptions: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
-				resource: ['contacts'],
+				resource: ['companies'],
 			},
 		},
 		options: [
 			{
-				name: 'Get contacts list',
+				name: 'Get companies list',
 				value: 'get',
-				description: 'Get list of contacts',
-				action: 'Get list of contacts',
+				description: 'Get list of companies',
+				action: 'Get list of companies',
 			},
 			{
 				name: 'Create',
 				value: 'create',
-				description: 'Create new contacts',
-				action: 'Create new contacts',
+				description: 'Create new companies',
+				action: 'Create new companies',
 			},
 			{
 				name: 'Update',
 				value: 'update',
-				description: 'Update contacts',
-				action: 'Update contacts',
+				description: 'Update companies',
+				action: 'Update companies',
 			},
 		],
 		default: 'get',

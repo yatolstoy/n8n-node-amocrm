@@ -5,6 +5,7 @@ import { router } from './resources/router';
 import * as account from './resources/account';
 import * as leads from './resources/leads';
 import * as contacts from './resources/contacts';
+import * as companies from './resources/companies';
 import * as unsorted from './resources/unsorted';
 
 import * as loadOptions from './methods';
@@ -64,6 +65,7 @@ export class AmoCRM implements INodeType {
 			...leads.descriptions,
 			...unsorted.descriptions,
 			...contacts.descriptions,
+			...companies.descriptions,
 		],
 	};
 
