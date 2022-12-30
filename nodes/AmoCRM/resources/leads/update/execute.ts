@@ -2,7 +2,7 @@ import { IExecuteFunctions } from 'n8n-core';
 
 import { INodeExecutionData } from 'n8n-workflow';
 import { clearNullableProps } from '../../../helpers/clearNullableProps';
-import { ITypeField } from '../../../Interface';
+import { ICustomFieldValuesForm, ITypeField } from '../../../Interface';
 
 import { apiRequest } from '../../../transport';
 
@@ -20,15 +20,12 @@ interface IFormLead {
 		created_at?: string;
 		updated_at?: string;
 		loss_reason_id?: number | number[];
-		custom_fields_values?: {
-			custom_field: { data: string; value: string; enum_id: number; enum_code: string }[];
-		};
+		custom_fields_values?: ICustomFieldValuesForm;
 		_embedded?: {
-			tags?: {
+			tags?: Array<{
 				id: number[];
-			}[];
+			}>;
 		};
-		request_id: string;
 	}>;
 }
 
@@ -118,8 +115,6 @@ export async function execute(
 			},
 		}))
 		.map(clearNullableProps);
-	console.log(body);
-	// const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
-	// return this.helpers.returnJsonArray(responseData);
-	return this.helpers.returnJsonArray([]);
+	const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
+	return this.helpers.returnJsonArray(responseData);
 }

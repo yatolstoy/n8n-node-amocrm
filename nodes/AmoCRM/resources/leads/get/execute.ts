@@ -1,8 +1,10 @@
 import { IExecuteFunctions } from 'n8n-core';
 
 import { IDataObject, INodeExecutionData } from 'n8n-workflow';
+import { INumRange, IStringRange } from '../../../Interface';
 
 import { apiRequest, apiRequestAllItems } from '../../../transport';
+import { makeRangeProperty } from '../../_components/DateRangeDescription';
 
 interface IFilter {
 	id?: number[];
@@ -17,16 +19,6 @@ interface IFilter {
 	updated_at: INumRange;
 	closed_at: INumRange;
 	closest_task_at: INumRange;
-}
-
-interface IStringRange {
-	from: string;
-	to: string;
-}
-
-interface INumRange {
-	from: number;
-	to: number;
 }
 
 interface FilterFromFrontend {
@@ -134,14 +126,4 @@ export async function execute(
 
 	const responseData = await apiRequest.call(this, requestMethod, endpoint, body, qs);
 	return this.helpers.returnJsonArray(responseData);
-}
-
-function makeRangeProperty(obj: IStringRange | undefined): INumRange | undefined {
-	if (!obj) return undefined;
-	const from = Math.round(new Date(obj?.from).valueOf() / 1000);
-	const to = Math.round(new Date(obj?.to).valueOf() / 1000);
-	return {
-		from,
-		to,
-	};
 }
