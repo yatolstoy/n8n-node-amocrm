@@ -1,13 +1,20 @@
-import { INodeProperties, INodePropertyCollection, INodePropertyOptions } from 'n8n-workflow';
+import {
+	IDisplayOptions,
+	INodeProperties,
+	INodePropertyCollection,
+	INodePropertyOptions,
+} from 'n8n-workflow';
 
 export const addSortDescription = (
-	sortByOptions: Array<INodeProperties | INodePropertyOptions | INodePropertyCollection>,
+	displayOptions?: IDisplayOptions,
+	sortByOptions?: Array<INodeProperties | INodePropertyOptions | INodePropertyCollection>,
 ): INodeProperties => {
 	return {
 		displayName: 'Sort',
 		name: 'sort',
 		placeholder: 'Add sorting',
 		type: 'fixedCollection',
+		displayOptions,
 		default: {},
 		options: [
 			{

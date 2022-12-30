@@ -7,12 +7,7 @@ export const addLimitDescription = (
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		displayOptions: {
-			show: {
-				resource: ['unsorted'],
-				operation: ['get'],
-			},
-		},
+		displayOptions,
 		typeOptions: {
 			maxValue: 250,
 			minValue: 1,
