@@ -1,7 +1,7 @@
 import { INodeProperties, INodePropertyCollection, INodePropertyOptions } from 'n8n-workflow';
 import { addCustomFieldDescription } from '../_components/CustomFieldsDescription';
 
-const leadModelDescription: INodeProperties[] = [
+const modelDescription: INodeProperties[] = [
 	{
 		displayName: 'Name',
 		name: 'name',
@@ -95,13 +95,13 @@ const leadModelDescription: INodeProperties[] = [
 		},
 		noDataExpression: true,
 	},
-	addCustomFieldDescription(),
+	addCustomFieldDescription('getLeadsCustomFields'),
 ];
 
 export const makeLeadModelDescription = (
 	embeddedOptions?: Array<INodeProperties | INodePropertyOptions | INodePropertyCollection>,
 ) => {
-	const model: INodeProperties[] = [...leadModelDescription];
+	const model: INodeProperties[] = [...modelDescription];
 	const options = embeddedOptions ? [...embeddedOptions] : [];
 
 	// make shared embedded
