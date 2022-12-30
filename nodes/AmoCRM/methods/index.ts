@@ -123,6 +123,54 @@ export async function getContactCustomFields(
 	}));
 }
 
+export async function getCompanyCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', 'companies/custom_fields', {});
+
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const resource = await this.getNodeParameter('resource', 0);
+
+	if (!resource) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', `${resource}/custom_fields`, {});
+
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
 export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 	const lrResponseData: Array<IResponseData<'loss_reasons', ILossReason>> =
 		await apiRequestAllItems.call(this, 'GET', 'leads/loss_reasons', {});
@@ -170,6 +218,35 @@ export async function getContactTags(this: ILoadOptionsFunctions): Promise<INode
 		this,
 		'GET',
 		'contacts/tags',
+		{},
+	);
+
+	const tags = tagsResponseData.reduce((acc: ITag[], response) => {
+		acc.push(...response._embedded.tags);
+		return acc;
+	}, []);
+
+	if (!tags?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return tags.map((field) => ({
+		name: field.name.length > 30 ? `${field.name.slice(0, 30)}...` : field.name,
+		value: field.id,
+	}));
+}
+
+export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const resource = await this.getNodeParameter('resource', 0);
+
+	if (!resource) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	const tagsResponseData: Array<IResponseData<'tags', ITag>> = await apiRequestAllItems.call(
+		this,
+		'GET',
+		`${resource}/tags`,
 		{},
 	);
 
