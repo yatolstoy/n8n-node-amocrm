@@ -4,6 +4,7 @@ import { INodeType, INodeTypeDescription } from 'n8n-workflow';
 import { router } from './resources/router';
 import * as account from './resources/account';
 import * as leads from './resources/leads';
+import * as contacts from './resources/contacts';
 import * as unsorted from './resources/unsorted';
 
 import * as loadOptions from './methods';
@@ -42,6 +43,14 @@ export class AmoCRM implements INodeType {
 						value: 'leads',
 					},
 					{
+						name: 'Contacts',
+						value: 'contacts',
+					},
+					{
+						name: 'Companies',
+						value: 'companies',
+					},
+					{
 						name: 'Unsorted',
 						value: 'unsorted',
 					},
@@ -54,6 +63,7 @@ export class AmoCRM implements INodeType {
 			...account.descriptions,
 			...leads.descriptions,
 			...unsorted.descriptions,
+			...contacts.descriptions,
 		],
 	};
 

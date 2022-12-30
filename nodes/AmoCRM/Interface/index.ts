@@ -27,3 +27,13 @@ export interface ILinks {
 interface IHref {
 	href: string;
 }
+
+export interface IStringRange {
+	from: string;
+	to: string;
+}
+
+export interface INumRange {
+	from: number;
+	to: number;
+}

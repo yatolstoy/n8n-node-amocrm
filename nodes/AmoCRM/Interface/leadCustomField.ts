@@ -49,3 +49,7 @@ export type ITypeField =
 	| 'file'
 	| 'price'
 	| 'category';
+
+export interface ICustomFieldValuesForm {
+	custom_field: Array<{ data: string; value: string; enum_id: number; enum_code: string }>;
+}
