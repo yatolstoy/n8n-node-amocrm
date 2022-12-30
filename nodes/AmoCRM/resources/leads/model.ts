@@ -124,7 +124,7 @@ export const makeLeadModelDescription = (
 						name: 'id',
 						type: 'multiOptions',
 						typeOptions: {
-							loadOptionsMethod: 'getTags',
+							loadOptionsMethod: 'getLeadTags',
 						},
 						default: [],
 					},
