@@ -95,7 +95,7 @@ const modelDescription: INodeProperties[] = [
 		},
 		noDataExpression: true,
 	},
-	addCustomFieldDescription('getLeadsCustomFields'),
+	addCustomFieldDescription('getCustomFields'),
 ];
 
 export const makeLeadModelDescription = (
@@ -124,7 +124,7 @@ export const makeLeadModelDescription = (
 						name: 'id',
 						type: 'multiOptions',
 						typeOptions: {
-							loadOptionsMethod: 'getLeadTags',
+							loadOptionsMethod: 'getTags',
 						},
 						default: [],
 					},
