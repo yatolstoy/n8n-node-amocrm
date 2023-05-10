@@ -1,9 +1,9 @@
 import { IExecuteFunctions } from 'n8n-core';
 
 import { IDataObject, INodeExecutionData } from 'n8n-workflow';
-import { clearNullableProps } from '../../../../helpers/clearNullableProps';
+import { clearNullableProps } from '../../../helpers/clearNullableProps';
 
-import { apiRequest, apiRequestAllItems } from '../../../../transport';
+import { apiRequest, apiRequestAllItems } from '../../../transport';
 
 export async function execute(
 	this: IExecuteFunctions,

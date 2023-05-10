@@ -12,6 +12,12 @@ const displayOptions: IDisplayOptions | undefined = {
 
 const updateContactModel: INodeProperties[] = [
 	{
+		displayName: 'Request ID',
+		name: 'request_id',
+		type: 'string',
+		default: undefined,
+	},
+	{
 		displayName: 'ID',
 		name: 'id',
 		type: 'number',
@@ -25,12 +31,6 @@ const updateContactModel: INodeProperties[] = [
 		default: undefined,
 	},
 	...makeContactModelDescription(),
-	{
-		displayName: 'Request ID',
-		name: 'request_id',
-		type: 'string',
-		default: undefined,
-	},
 ];
 
 export const description: IContactsProperties = [

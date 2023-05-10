@@ -10,7 +10,7 @@ const displayOptions: IDisplayOptions | undefined = {
 	},
 };
 
-const createContactModel: INodeProperties[] = [
+export const createContactModel: INodeProperties[] = [
 	{
 		displayName: 'Name',
 		name: 'name',

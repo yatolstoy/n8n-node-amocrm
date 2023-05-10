@@ -1,5 +1,6 @@
 import { ILoadOptionsFunctions, INodePropertyOptions, NodeOperationError } from 'n8n-workflow';
 import {
+	IAccount,
 	IAmoUser,
 	ICustomField,
 	ILossReason,
@@ -81,17 +82,122 @@ export async function getActiveUsers(this: ILoadOptionsFunctions): Promise<INode
 		}));
 }
 
-export async function getCustomFields(
+export async function getLeadCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
-	const resource = await this.getNodeParameter('resource', 0);
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', `leads/custom_fields`, {});
 
-	if (!resource) {
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getContactCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', `contacts/custom_fields`, {});
+
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getCompanyCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', `companies/custom_fields`, {});
+
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getCustomerCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', `customers/custom_fields`, {});
+
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getCustomerSegmentCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+		await apiRequestAllItems.call(this, 'GET', `customers/segments/custom_fields`, {});
+
+	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+		acc.push(...response._embedded.custom_fields);
+		return acc;
+	}, []);
+
+	if (!customFields?.length) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+
+	return customFields.map((field) => ({
+		name: `${field.name} (${field.type})`,
+		value: JSON.stringify({ id: field.id, type: field.type }),
+	}));
+}
+
+export async function getCatalogCustomFields(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const catalog_id = await this.getNodeParameter('catalog_id', 0);
+
+	if (!catalog_id) {
 		throw new NodeOperationError(this.getNode(), 'No data got returned');
 	}
 
 	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
-		await apiRequestAllItems.call(this, 'GET', `${resource}/custom_fields`, {});
+		await apiRequestAllItems.call(this, 'GET', `catalogs/${catalog_id}/custom_fields`, {});
 
 	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
 		acc.push(...response._embedded.custom_fields);
@@ -109,6 +215,9 @@ export async function getCustomFields(
 }
 
 export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const accSettingsData: IAccount = await apiRequest.call(this, 'GET', 'account', {});
+	if (!accSettingsData.is_loss_reason_enabled) return [];
+
 	const lrResponseData: Array<IResponseData<'loss_reasons', ILossReason>> =
 		await apiRequestAllItems.call(this, 'GET', 'leads/loss_reasons', {});
 

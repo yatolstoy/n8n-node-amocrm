@@ -38,6 +38,14 @@ export const description: IAccountProperties = [
 				name: 'Datetime settings',
 				value: 'datetime_settings',
 			},
+			{
+				name: 'Drive url',
+				value: 'drive_url',
+			},
+			{
+				name: 'Is API filter enabled',
+				value: 'is_api_filter_enabled',
+			},
 		],
 	),
 ];

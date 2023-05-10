@@ -5,6 +5,7 @@ export * from './leadCustomField';
 export * from './lossReason';
 export * from './tags';
 export * from './lead';
+export * from './account';
 
 export interface IResponseData<S extends string, T> {
 	_total_items: number;

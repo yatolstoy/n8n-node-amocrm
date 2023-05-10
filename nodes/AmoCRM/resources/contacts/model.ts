@@ -54,7 +54,7 @@ export const makeContactModelDescription = (
 ) => {
 	const model: INodeProperties[] = [
 		...modelDescription,
-		addCustomFieldDescription('getCustomFields'),
+		addCustomFieldDescription('getContactCustomFields'),
 	];
 
 	// add embedded

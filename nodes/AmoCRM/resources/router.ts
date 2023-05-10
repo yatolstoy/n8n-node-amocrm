@@ -1,7 +1,7 @@
 import { IExecuteFunctions } from 'n8n-core';
 import { IDataObject, INodeExecutionData } from 'n8n-workflow';
 
-import { IAmo } from './Interfaces';
+import { IAmo } from './interfaces';
 
 import * as account from './account';
 import * as leads from './leads';
@@ -26,9 +26,10 @@ export async function router(this: IExecuteFunctions): Promise<INodeExecutionDat
 				responseData = await account[amo.operation].execute.call(this, i);
 			} else if (amo.resource === 'leads') {
 				responseData = await leads[amo.operation].execute.call(this, i);
-			} else if (amo.resource === 'unsorted') {
-				responseData = await unsorted[amo.operation].execute.call(this, i);
 			}
+			// else if (amo.resource === 'unsorted') {
+			// 	responseData = await unsorted[amo.operation].execute.call(this, i);
+			// }
 
 			const executionData = this.helpers.constructExecutionMetaData(
 				this.helpers.returnJsonArray(responseData),

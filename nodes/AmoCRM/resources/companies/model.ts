@@ -60,7 +60,7 @@ export const makeCompanyModelDescription = (
 ) => {
 	const model: INodeProperties[] = [
 		...modelDescription,
-		addCustomFieldDescription('getCustomFields'),
+		addCustomFieldDescription('getCompanyCustomFields'),
 	];
 
 	// add embedded

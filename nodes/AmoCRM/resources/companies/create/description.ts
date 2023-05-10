@@ -10,7 +10,7 @@ const displayOptions: IDisplayOptions | undefined = {
 	},
 };
 
-const createCompanyModel: INodeProperties[] = [
+export const createCompanyModel: INodeProperties[] = [
 	...makeCompanyModelDescription(),
 	{
 		displayName: 'Request ID',

@@ -18,13 +18,13 @@ const updateLeadModel: INodeProperties[] = [
 		default: undefined,
 		required: true,
 	},
-	...makeLeadModelDescription(),
 	{
 		displayName: 'Request ID',
 		name: 'request_id',
 		type: 'string',
 		default: undefined,
 	},
+	...makeLeadModelDescription(),
 ];
 
 export const description: ILeadsProperties = [
@@ -32,7 +32,7 @@ export const description: ILeadsProperties = [
 	{
 		displayName: 'Leads',
 		name: 'collection',
-		placeholder: 'Edit lead',
+		placeholder: 'Add edited lead',
 		type: 'fixedCollection',
 		default: [],
 		typeOptions: {

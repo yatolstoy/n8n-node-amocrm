@@ -93,9 +93,9 @@ const modelDescription: INodeProperties[] = [
 		typeOptions: {
 			loadOptionsMethod: 'getLossReasons',
 		},
-		noDataExpression: true,
+		noDataExpression: false,
 	},
-	addCustomFieldDescription('getCustomFields'),
+	addCustomFieldDescription('getLeadCustomFields'),
 ];
 
 export const makeLeadModelDescription = (
