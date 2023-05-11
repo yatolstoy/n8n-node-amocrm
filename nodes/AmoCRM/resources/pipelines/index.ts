@@ -5,7 +5,7 @@ import * as create from './create';
 import * as update from './update';
 import * as remove from './delete';
 
-export { get, create, update };
+export { get, create, update, remove };
 
 export const descriptions: INodeProperties[] = [
 	{
