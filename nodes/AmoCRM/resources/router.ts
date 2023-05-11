@@ -6,6 +6,7 @@ import { IAmo } from './interfaces';
 import * as account from './account';
 import * as leads from './leads';
 import * as unsorted from './unsorted';
+import * as pipelines from './pipelines';
 
 export async function router(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 	const items = this.getInputData();
@@ -26,9 +27,11 @@ export async function router(this: IExecuteFunctions): Promise<INodeExecutionDat
 				responseData = await account[amo.operation].execute.call(this, i);
 			} else if (amo.resource === 'leads') {
 				responseData = await leads[amo.operation].execute.call(this, i);
+			} else if (amo.resource === 'unsorted') {
+				responseData = await unsorted[amo.operation].execute.call(this, i);
 			}
-			// else if (amo.resource === 'unsorted') {
-			// 	responseData = await unsorted[amo.operation].execute.call(this, i);
+			//  else if (amo.resource === 'pipelines') {
+			// 	responseData = await pipelines[amo.operation].execute.call(this, i);
 			// }
 
 			const executionData = this.helpers.constructExecutionMetaData(
