@@ -9,6 +9,7 @@ import * as companies from './resources/companies';
 import * as unsorted from './resources/unsorted';
 import * as pipelines from './resources/pipelines';
 import * as statuses from './resources/statuses';
+import * as catalogs from './resources/catalogs';
 
 import * as loadOptions from './methods';
 
@@ -65,6 +66,10 @@ export class AmoCRM implements INodeType {
 						name: 'Statuses',
 						value: 'statuses',
 					},
+					{
+						name: 'Catalogs',
+						value: 'catalogs',
+					},
 				],
 				default: 'account',
 				noDataExpression: true,
@@ -78,6 +83,7 @@ export class AmoCRM implements INodeType {
 			...companies.descriptions,
 			...pipelines.descriptions,
 			...statuses.descriptions,
+			...catalogs.descriptions,
 		],
 	};
 
