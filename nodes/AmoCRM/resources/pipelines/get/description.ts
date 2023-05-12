@@ -1,4 +1,4 @@
-import { IAccountProperties } from '../../interfaces';
+import { IPipelinesProperties } from '../../interfaces';
 
 const displayOptions = {
 	show: {
@@ -6,4 +6,4 @@ const displayOptions = {
 		operation: ['get'],
 	},
 };
-export const description: IAccountProperties = [];
+export const description: IPipelinesProperties = [];

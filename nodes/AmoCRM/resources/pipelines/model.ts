@@ -13,7 +13,6 @@ export const pipelineModelDescription = (
 		name: 'name',
 		type: 'string',
 		default: undefined,
-		required: true,
 		displayOptions,
 	},
 	{
@@ -21,7 +20,6 @@ export const pipelineModelDescription = (
 		name: 'sort',
 		type: 'number',
 		default: 1,
-		required: true,
 		displayOptions,
 	},
 	{
@@ -29,7 +27,6 @@ export const pipelineModelDescription = (
 		name: 'is_main',
 		type: 'boolean',
 		default: false,
-		required: true,
 		displayOptions,
 	},
 	{
@@ -37,7 +34,6 @@ export const pipelineModelDescription = (
 		name: 'is_unsorted_on',
 		type: 'boolean',
 		default: false,
-		required: true,
 		displayOptions,
 	},
 ];

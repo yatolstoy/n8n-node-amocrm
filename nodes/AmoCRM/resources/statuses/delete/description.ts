@@ -3,19 +3,19 @@ import { ILeadsProperties } from '../../interfaces';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
-		resource: ['pipelines'],
+		resource: ['statuses'],
 		operation: ['delete'],
 	},
 };
 
 export const description: ILeadsProperties = [
 	{
-		displayName: 'Pipeline',
-		name: 'id',
+		displayName: 'Status',
+		name: 'status_id',
 		type: 'options',
 		default: [],
 		typeOptions: {
-			loadOptionsMethod: 'getPipelines',
+			loadOptionsMethod: 'getStatuses',
 		},
 		required: true,
 		displayOptions,
