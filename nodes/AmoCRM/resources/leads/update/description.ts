@@ -2,6 +2,7 @@ import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { ILeadsProperties } from '../../interfaces';
 import { addJsonParametersDescription } from '../../_components/JsonParametersDescription';
 import { makeLeadModelDescription } from '../model';
+import { addRequestId } from '../../_components/RequestId';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
@@ -18,13 +19,8 @@ const updateLeadModel: INodeProperties[] = [
 		default: undefined,
 		required: true,
 	},
-	{
-		displayName: 'Request ID',
-		name: 'request_id',
-		type: 'string',
-		default: undefined,
-	},
 	...makeLeadModelDescription(),
+	addRequestId(),
 ];
 
 export const description: ILeadsProperties = [

@@ -1,5 +1,6 @@
 import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { addStatusColor } from '../_components/StatusColor';
+import { addRequestId } from '../_components/RequestId';
 
 export const statusModelDescription = (
 	displayOptions?: IDisplayOptions,
@@ -57,11 +58,5 @@ export const statusModelDescription = (
 		],
 		displayOptions,
 	},
-	{
-		displayName: 'Request ID',
-		name: 'request_id',
-		type: 'string',
-		default: undefined,
-		displayOptions,
-	},
+	addRequestId(displayOptions),
 ];

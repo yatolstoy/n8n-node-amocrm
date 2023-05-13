@@ -1,5 +1,6 @@
 import { IDisplayOptions } from 'n8n-workflow';
 import { IContactsProperties } from '../../interfaces';
+import { addCatalogSelector } from '../../_components/CatalogSelector';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
@@ -8,16 +9,4 @@ const displayOptions: IDisplayOptions | undefined = {
 	},
 };
 
-export const description: IContactsProperties = [
-	{
-		displayName: 'Catalog',
-		name: 'catalog_id',
-		type: 'options',
-		default: [],
-		typeOptions: {
-			loadOptionsMethod: 'getCatalogs',
-		},
-		required: true,
-		displayOptions,
-	},
-];
+export const description: IContactsProperties = [addCatalogSelector(displayOptions)];

@@ -1,29 +1,23 @@
 import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { ICatalogsProperties } from '../../interfaces';
 import { addJsonParametersDescription } from '../../_components/JsonParametersDescription';
-import { makeCatalogModelDescription } from '../model';
+import { makeCatalogElementModelDescription } from '../model';
 import { addCatalogSelector } from '../../_components/CatalogSelector';
-import { addRequestId } from '../../_components/RequestId';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['catalogs'],
-		operation: ['update'],
+		operation: ['createElements'],
 	},
 };
 
-const updateCatalogModel: INodeProperties[] = [
-	addCatalogSelector(),
-	...makeCatalogModelDescription(),
-	// addRequestId(),
-];
-
 export const description: ICatalogsProperties = [
+	addCatalogSelector(displayOptions),
 	...addJsonParametersDescription(displayOptions),
 	{
-		displayName: 'Catalogs',
+		displayName: 'Catalog elements',
 		name: 'collection',
-		placeholder: 'Edit catalog',
+		placeholder: 'Add element',
 		type: 'fixedCollection',
 		default: [],
 		typeOptions: {
@@ -37,9 +31,9 @@ export const description: ICatalogsProperties = [
 		},
 		options: [
 			{
-				displayName: 'Catalog',
-				name: 'catalog',
-				values: updateCatalogModel,
+				displayName: 'Element',
+				name: 'element',
+				values: makeCatalogElementModelDescription(),
 			},
 		],
 	},

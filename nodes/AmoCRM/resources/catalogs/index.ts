@@ -1,11 +1,14 @@
 import { INodeProperties } from 'n8n-workflow';
 
 import * as get from './get';
+import * as getElements from './getElements';
 import * as getById from './getById';
 import * as create from './create';
+import * as createElements from './createElements';
 import * as update from './update';
+import * as updateElements from './updateElements';
 
-export { get, getById, create, update };
+export { get, getById, getElements, create, createElements, update, updateElements };
 
 export const descriptions: INodeProperties[] = [
 	{
@@ -66,6 +69,9 @@ export const descriptions: INodeProperties[] = [
 	},
 	...get.description,
 	...getById.description,
+	...getElements.description,
 	...create.description,
+	...createElements.description,
 	...update.description,
+	...updateElements.description,
 ];

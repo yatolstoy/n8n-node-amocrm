@@ -3,6 +3,7 @@ import {
 	IAccount,
 	IAmoUser,
 	ICatalog,
+	ICatalogElement,
 	ICustomField,
 	ILossReason,
 	IPipeline,
@@ -29,6 +30,32 @@ export async function getPipelines(this: ILoadOptionsFunctions): Promise<INodePr
 	);
 }
 
+export async function getStatuses(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const pipelinesResponseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
+	if (!pipelinesResponseData?._embedded?.pipelines) {
+		throw new NodeOperationError(this.getNode(), 'No data got returned');
+	}
+	const resultArray: INodePropertyOptions[] = [];
+	for (const pipeline of pipelinesResponseData._embedded.pipelines) {
+		const responseData = await apiRequest.call(
+			this,
+			'GET',
+			`leads/pipelines/${pipeline.id}/statuses`,
+			{},
+		);
+		const statuses: IStatus[] = responseData?._embedded?.statuses;
+		if (statuses) {
+			statuses.forEach((status: IStatus) => {
+				resultArray.push({
+					name: `${status.name} (${pipeline.name})`,
+					value: status.id,
+				});
+			});
+		}
+	}
+	return resultArray;
+}
+
 export async function getCatalogs(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 	const catalogsResponseData = await apiRequestAllItems.call(this, 'GET', 'catalogs', {});
 	return catalogsResponseData.flatMap((data) => {
@@ -36,6 +63,25 @@ export async function getCatalogs(this: ILoadOptionsFunctions): Promise<INodePro
 		return data._embedded.catalogs.map((catalog: ICatalog) => ({
 			name: catalog.name,
 			value: catalog.id,
+		}));
+	});
+}
+
+export async function getCatalogElements(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const catalogId = await this.getNodeParameter('catalog_id', 0);
+	const elementsResponseData = await apiRequestAllItems.call(
+		this,
+		'GET',
+		`catalogs/${catalogId}/elements`,
+		{},
+	);
+	return elementsResponseData.flatMap((data) => {
+		if (!data?._embedded?.elements) return [];
+		return data._embedded.elements.map((el: ICatalogElement) => ({
+			name: el.name,
+			value: el.id,
 		}));
 	});
 }

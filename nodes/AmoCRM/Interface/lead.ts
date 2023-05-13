@@ -1,3 +1,5 @@
+import { ICustomFieldValues } from './';
+
 export interface ILead {
 	name: string;
 	price: number;
@@ -10,7 +12,7 @@ export interface ILead {
 	updated_at: number;
 	loss_reason_id: number;
 	responsible_user_id: number;
-	custom_fields_values: ICustomField[];
+	custom_fields_values: ICustomFieldValues[];
 	_embedded: {
 		tags: Array<{ id: number }>;
 		contacts: Array<{ id: number; is_main: boolean }>;
@@ -20,13 +22,4 @@ export interface ILead {
 			type: 'widget';
 		};
 	};
-}
-
-interface ICustomField {
-	field_id: number;
-	values: Array<{
-		value?: string | number | boolean;
-		enum_id?: number;
-		enum_code?: string;
-	}>;
 }

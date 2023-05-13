@@ -2,6 +2,7 @@ import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { ICompaniesProperties } from '../../interfaces';
 import { addJsonParametersDescription } from '../../_components/JsonParametersDescription';
 import { makeCompanyModelDescription } from '../model';
+import { addRequestId } from '../../_components/RequestId';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
@@ -10,15 +11,7 @@ const displayOptions: IDisplayOptions | undefined = {
 	},
 };
 
-const updateCompanyModel: INodeProperties[] = [
-	...makeCompanyModelDescription(),
-	{
-		displayName: 'Request ID',
-		name: 'request_id',
-		type: 'string',
-		default: undefined,
-	},
-];
+const updateCompanyModel: INodeProperties[] = [...makeCompanyModelDescription(), addRequestId()];
 
 export const description: ICompaniesProperties = [
 	...addJsonParametersDescription(displayOptions),

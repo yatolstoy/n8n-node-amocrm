@@ -7,6 +7,7 @@ export * from './tags';
 export * from './lead';
 export * from './account';
 export * from './catalog';
+export * from './catalogElement';
 
 export interface IResponseData<S extends string, T> {
 	_total_items: number;
@@ -38,4 +39,13 @@ export interface IStringRange {
 export interface INumRange {
 	from: number;
 	to: number;
+}
+
+export interface ICustomFieldValues {
+	field_id: number;
+	values: Array<{
+		value?: string | number | boolean;
+		enum_id?: number;
+		enum_code?: string;
+	}>;
 }

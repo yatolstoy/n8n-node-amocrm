@@ -2,6 +2,7 @@ import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { IContactsProperties, ILeadsProperties } from '../../interfaces';
 import { addJsonParametersDescription } from '../../_components/JsonParametersDescription';
 import { makeContactModelDescription } from '../model';
+import { addRequestId } from '../../_components/RequestId';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
@@ -11,12 +12,6 @@ const displayOptions: IDisplayOptions | undefined = {
 };
 
 const updateContactModel: INodeProperties[] = [
-	{
-		displayName: 'Request ID',
-		name: 'request_id',
-		type: 'string',
-		default: undefined,
-	},
 	{
 		displayName: 'ID',
 		name: 'id',
@@ -31,6 +26,7 @@ const updateContactModel: INodeProperties[] = [
 		default: undefined,
 	},
 	...makeContactModelDescription(),
+	addRequestId(),
 ];
 
 export const description: IContactsProperties = [

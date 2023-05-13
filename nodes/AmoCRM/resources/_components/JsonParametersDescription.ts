@@ -10,6 +10,7 @@ export const addJsonParametersDescription = (
 			type: 'boolean',
 			displayOptions,
 			default: false,
+			noDataExpression: true,
 		},
 		{
 			displayName: 'Stringifyed array of objects',

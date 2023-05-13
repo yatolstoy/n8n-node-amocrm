@@ -1,4 +1,6 @@
 import { INodeProperties, INodePropertyCollection, INodePropertyOptions } from 'n8n-workflow';
+import { addCustomFieldDescription } from '../_components/CustomFieldsDescription';
+import { addRequestId } from '../_components/RequestId';
 
 export const makeCatalogModelDescription = () => {
 	const model: INodeProperties[] = [
@@ -47,6 +49,22 @@ export const makeCatalogModelDescription = () => {
 			type: 'boolean',
 			default: false,
 		},
+	];
+
+	return model;
+};
+
+export const makeCatalogElementModelDescription = () => {
+	const model: INodeProperties[] = [
+		{
+			displayName: 'Name',
+			name: 'name',
+			type: 'string',
+			default: undefined,
+			required: true,
+		},
+		addCustomFieldDescription('getCatalogCustomFields'),
+		// addRequestId(),
 	];
 
 	return model;
