@@ -111,6 +111,13 @@ export async function getActiveUsers(this: ILoadOptionsFunctions): Promise<INode
 		}));
 }
 
+export async function getActiveUsersWithRobot(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const users = await getActiveUsers.call(this);
+	return [{ name: 'Not Selected', value: 0 }, ...users];
+}
+
 export async function getLeadCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
@@ -280,12 +287,13 @@ export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropert
 	);
 
 	const tags = tagsResponseData.reduce((acc: ITag[], response) => {
-		acc.push(...response._embedded.tags);
+		if (!response?._embedded) return acc;
+		acc.push(...response._embedded?.tags);
 		return acc;
 	}, []);
 
 	if (!tags?.length) {
-		throw new NodeOperationError(this.getNode(), 'No data got returned');
+		return [];
 	}
 
 	return tags.map((field) => ({

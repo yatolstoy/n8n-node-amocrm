@@ -4,6 +4,7 @@ import { ICustomFieldValuesForm } from '../../../Interface';
 
 import { apiRequest } from '../../../transport';
 import { makeCustomFieldReqObject } from '../../_components/CustomFieldsDescription';
+import { getTimestampFromDateString } from '../../_components/DateDescription';
 
 interface IFormContact {
 	contact: Array<{
@@ -34,13 +35,9 @@ export async function execute(
 	const jsonParams = (await this.getNodeParameter('json', 0)) as boolean;
 
 	if (jsonParams) {
-		const jsonString = (await this.getNodeParameter('jsonString', 0)) as string;
-		const responseData = await apiRequest.call(
-			this,
-			requestMethod,
-			endpoint,
-			JSON.parse(jsonString),
-		);
+		const data = await this.getNodeParameter('jsonString', 0);
+		const body = typeof data === 'string' ? JSON.parse(data) : data;
+		const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
 		return this.helpers.returnJsonArray(responseData);
 	}
 
@@ -49,6 +46,8 @@ export async function execute(
 	const body = collection.contact
 		.map((contact) => ({
 			...contact,
+			created_at: getTimestampFromDateString(contact.created_at),
+			updated_at: getTimestampFromDateString(contact.updated_at),
 			custom_fields_values:
 				contact.custom_fields_values && makeCustomFieldReqObject(contact.custom_fields_values),
 			_embedded: {
@@ -57,6 +56,8 @@ export async function execute(
 			},
 		}))
 		.map(clearNullableProps);
+
+	console.log(JSON.stringify(body, null, 2));
 
 	const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
 	return this.helpers.returnJsonArray(responseData);

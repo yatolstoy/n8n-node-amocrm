@@ -52,7 +52,7 @@ export async function execute(
 		qs.filter = {
 			...filterWithoutQuery,
 			id: filterWithoutQuery.id?.split(',').map((el) => Number(el.trim())),
-			name: filterWithoutQuery.name?.split(',').map((el) => el.trim()),
+			name: filterWithoutQuery.name?.split(',').map((el) => String(el.trim())),
 			created_at: makeRangeProperty(filterWithoutQuery.created_at?.dateRangeCustomProperties),
 			updated_at: makeRangeProperty(filterWithoutQuery.updated_at?.dateRangeCustomProperties),
 			closest_task_at: makeRangeProperty(
@@ -98,16 +98,10 @@ export async function execute(
 	const endpoint = `contacts`;
 
 	if (returnAll) {
-		const responseData = await await apiRequestAllItems.call(
-			this,
-			requestMethod,
-			endpoint,
-			body,
-			qs,
-		);
+		const responseData = await apiRequestAllItems.call(this, requestMethod, endpoint, body, qs);
 		return this.helpers.returnJsonArray(responseData);
 	}
 
 	const responseData = await apiRequest.call(this, requestMethod, endpoint, body, qs);
-	return this.helpers.returnJsonArray(responseData);
+	return await this.helpers.returnJsonArray(responseData);
 }

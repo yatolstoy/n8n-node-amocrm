@@ -33,11 +33,11 @@ export const description: IContactsProperties = [
 			description: 'Contact IDs separated by commas',
 		},
 		{
-			displayName: 'List of Names',
+			displayName: 'Contact Name',
 			name: 'name',
 			type: 'string',
 			default: '',
-			description: 'Names separated by commas',
+			description: 'Just one name of contact',
 		},
 		{
 			displayName: 'Created by Users',
@@ -64,7 +64,7 @@ export const description: IContactsProperties = [
 			noDataExpression: true,
 		},
 		{
-			displayName: 'Responsible User Names or IDs',
+			displayName: 'Responsible User Names',
 			name: 'responsible_user_id',
 			type: 'multiOptions',
 			default: [],

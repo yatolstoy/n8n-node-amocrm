@@ -48,7 +48,12 @@ export type ITypeField =
 	| 'monetary'
 	| 'file'
 	| 'price'
-	| 'category';
+	| 'category'
+	| 'multitext'
+	| 'items'
+	| 'linked_entity'
+	| 'payer'
+	| 'supplier';
 
 export interface ICustomFieldValuesForm {
 	custom_field: Array<{ data: string; value: string; enum_id: number; enum_code: string }>;

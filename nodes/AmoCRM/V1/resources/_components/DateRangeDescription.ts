@@ -1,5 +1,6 @@
 import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { INumRange, IStringRange } from '../../Interface';
+import { getTimestampFromDateString } from './DateDescription';
 
 export const addDateRangeDescription = (
 	displayName: string,
@@ -40,8 +41,9 @@ export const addDateRangeDescription = (
 
 export const makeRangeProperty = (obj: IStringRange | undefined): INumRange | undefined => {
 	if (!obj) return undefined;
-	const from = Math.round(new Date(obj?.from).valueOf() / 1000);
-	const to = Math.round(new Date(obj?.to).valueOf() / 1000);
+	const from = getTimestampFromDateString(obj?.from);
+	const to = getTimestampFromDateString(obj?.to);
+	if (!from || !to) return;
 	return {
 		from,
 		to,

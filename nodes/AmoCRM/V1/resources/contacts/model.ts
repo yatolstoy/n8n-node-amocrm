@@ -8,11 +8,11 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getActiveUsers',
+			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Created by User Name or ID',
@@ -20,11 +20,11 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getActiveUsers',
+			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Updated by User Name or ID',
@@ -32,11 +32,11 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getActiveUsers',
+			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Created At',
@@ -65,7 +65,7 @@ export const makeContactModelDescription = (
 	const embedded: INodeProperties = {
 		displayName: 'Embedded',
 		name: '_embedded',
-		placeholder: 'Add custom embedded',
+		placeholder: 'Add embedded',
 		type: 'fixedCollection',
 		default: {},
 		typeOptions: {
@@ -80,7 +80,8 @@ export const makeContactModelDescription = (
 						displayName: 'Tag Names or IDs',
 						name: 'id',
 						type: 'multiOptions',
-						description: 'Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+						description:
+							'Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 						typeOptions: {
 							loadOptionsMethod: 'getTags',
 						},

@@ -32,8 +32,6 @@ export async function execute(
 	const method = 'GET';
 	const endpoint = `leads/unsorted`;
 
-	console.log(qs);
-
 	const responseData = returnAll
 		? await apiRequestAllItems.call(this, method, endpoint, {}, clearNullableProps(qs))
 		: await apiRequest.call(this, method, endpoint, {}, clearNullableProps(qs));
