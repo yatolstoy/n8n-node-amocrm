@@ -1,10 +1,8 @@
 {
-	"node": "n8n-nodes-amocrm.AmoCRM",
+	"node": "n8n-nodes-amocrm.amocrm",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": [
-		"Miscellaneous"
-	],
+	"categories": ["Miscellaneous"],
 	"resources": {
 		"credentialDocumentation": [
 			{

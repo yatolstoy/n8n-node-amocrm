@@ -1,95 +1,22 @@
-import { IExecuteFunctions } from 'n8n-core';
-import { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { INodeTypeBaseDescription, IVersionedNodeType, VersionedNodeType } from 'n8n-workflow';
+import { AmocrmV1 } from './V1/AmocrmV1.node';
 
-import { router } from './resources/router';
-import * as account from './resources/account';
-import * as leads from './resources/leads';
-import * as contacts from './resources/contacts';
-import * as companies from './resources/companies';
-import * as unsorted from './resources/unsorted';
-import * as pipelines from './resources/pipelines';
-import * as statuses from './resources/statuses';
-import * as catalogs from './resources/catalogs';
+export class Amocrm extends VersionedNodeType {
+	constructor() {
+		const baseDescription: INodeTypeBaseDescription = {
+			displayName: 'Amocrm',
+			name: 'amocrm',
+			icon: 'file:amocrm_logo.svg',
+			group: ['output'],
+			subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+			description: 'Sends data to AmoCrm',
+			defaultVersion: 1,
+		};
 
-import * as loadOptions from './methods';
+		const nodeVersions: IVersionedNodeType['nodeVersions'] = {
+			1: new AmocrmV1(baseDescription),
+		};
 
-export class AmoCRM implements INodeType {
-	description: INodeTypeDescription = {
-		displayName: 'AmoCRM',
-		name: 'amoCrm',
-		icon: 'file:amocrm_logo.png',
-		group: ['transform'],
-		version: 1,
-		description: 'Consume AmoCRM API',
-		defaults: {
-			name: 'AmoCRM',
-		},
-		inputs: ['main'],
-		outputs: ['main'],
-		credentials: [
-			{
-				name: 'amocrmOAuth2Api',
-				required: true,
-			},
-		],
-		properties: [
-			{
-				displayName: 'Resource',
-				name: 'resource',
-				type: 'options',
-				options: [
-					{
-						name: 'Account',
-						value: 'account',
-					},
-					{
-						name: 'Leads',
-						value: 'leads',
-					},
-					{
-						name: 'Contacts',
-						value: 'contacts',
-					},
-					{
-						name: 'Companies',
-						value: 'companies',
-					},
-					{
-						name: 'Unsorted',
-						value: 'unsorted',
-					},
-					{
-						name: 'Pipelines',
-						value: 'pipelines',
-					},
-					{
-						name: 'Statuses',
-						value: 'statuses',
-					},
-					{
-						name: 'Catalogs',
-						value: 'catalogs',
-					},
-				],
-				default: 'account',
-				noDataExpression: true,
-				required: true,
-				description: 'Select resource',
-			},
-			...account.descriptions,
-			...leads.descriptions,
-			...unsorted.descriptions,
-			...contacts.descriptions,
-			...companies.descriptions,
-			...pipelines.descriptions,
-			...statuses.descriptions,
-			...catalogs.descriptions,
-		],
-	};
-
-	methods = { loadOptions };
-
-	async execute(this: IExecuteFunctions) {
-		return router.call(this);
+		super(nodeVersions, baseDescription);
 	}
 }
