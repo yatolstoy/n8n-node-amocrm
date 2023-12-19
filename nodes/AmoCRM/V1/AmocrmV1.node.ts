@@ -8,8 +8,7 @@ import {
 import * as loadOptions from './methods';
 import { router } from './resources/router';
 
-// import { router } from './resources/router';
-// import * as account from './resources/account';
+import * as account from './resources/account';
 // import * as leads from './resources/leads';
 // import * as contacts from './resources/contacts';
 // import * as companies from './resources/companies';
@@ -141,6 +140,7 @@ export class AmocrmV1 implements INodeType {
 					],
 					default: 'account',
 				},
+				...account.descriptions,
 			],
 		};
 	}

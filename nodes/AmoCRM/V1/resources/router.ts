@@ -1,8 +1,7 @@
 import { IDataObject, INodeExecutionData, IExecuteFunctions } from 'n8n-workflow';
+import { IAmo } from './interfaces';
 
-// import { IAmo } from './interfaces';
-
-// import * as account from './account';
+import * as account from './account';
 // import * as leads from './leads';
 // import * as unsorted from './unsorted';
 // import * as pipelines from './pipelines';
@@ -14,18 +13,19 @@ export async function router(this: IExecuteFunctions): Promise<INodeExecutionDat
 	let responseData: IDataObject | IDataObject[] = [];
 
 	for (let i = 0; i < items.length; i++) {
-		// const resource = this.getNodeParameter<IAmo>('resource', i);
-		// const operation = this.getNodeParameter('operation', i);
+		const resource = this.getNodeParameter<IAmo>('resource', i);
+		const operation = this.getNodeParameter('operation', i);
 
-		// const amo = {
-		// 	resource,
-		// 	operation,
-		// } as IAmo;
+		const amo = {
+			resource,
+			operation,
+		} as IAmo;
 
 		try {
-			// if (amo.resource === 'account') {
-			// 	responseData = await account[amo.operation].execute.call(this, i);
-			// } else if (amo.resource === 'leads') {
+			if (amo.resource === 'account') {
+				responseData = await account[amo.operation].execute.call(this, i);
+			}
+			//else if (amo.resource === 'leads') {
 			// 	responseData = await leads[amo.operation].execute.call(this, i);
 			// } else if (amo.resource === 'unsorted') {
 			// 	responseData = await unsorted[amo.operation].execute.call(this, i);
