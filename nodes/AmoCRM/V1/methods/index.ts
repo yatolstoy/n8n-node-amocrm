@@ -285,10 +285,10 @@ export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INode
 	}));
 }
 
-export async function getSources(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-	const sources = await apiRequest.call(this, 'GET', 'sources', {});
-	return [];
-}
+// export async function getSources(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+// const sources = await apiRequest.call(this, 'GET', 'sources', {});
+// 	return [];
+// }
 
 export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 	const resource = await this.getNodeParameter('resource', 0);
