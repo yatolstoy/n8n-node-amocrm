@@ -7,4 +7,5 @@ export interface IStatus {
 	color: string;
 	type: number;
 	account_id: number;
+	pipeline_name: string;
 }

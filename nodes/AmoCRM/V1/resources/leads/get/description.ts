@@ -12,7 +12,7 @@ import { addWithDescription } from '../../_components/WithDescription';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['leads'],
-		operation: ['get'],
+		operation: ['getLeads'],
 	},
 };
 

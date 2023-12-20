@@ -4,6 +4,8 @@ import { ICustomFieldValuesForm } from '../../../Interface';
 
 import { apiRequest } from '../../../transport';
 import { makeCustomFieldReqObject } from '../../_components/CustomFieldsDescription';
+import { makeTagsArray } from '../../../helpers/makeTagsArray';
+import { getTimestampFromDateString } from '../../../helpers/getTimestampFromDateString';
 
 interface IFormLead {
 	lead: Array<{
@@ -71,18 +73,20 @@ export async function execute(
 	const body = leadsCollection.lead
 		.map((lead) => ({
 			...lead,
+			created_at: getTimestampFromDateString(lead.created_at),
+			updated_at: getTimestampFromDateString(lead.updated_at),
+			closed_at: getTimestampFromDateString(lead.closed_at),
 			custom_fields_values:
 				lead.custom_fields_values && makeCustomFieldReqObject(lead.custom_fields_values),
 			_embedded: {
 				...lead._embedded,
-				tags: lead._embedded?.tags?.flatMap((group) => group.id.map((id) => ({ id }))),
+				tags: lead._embedded?.tags?.flatMap(makeTagsArray),
 				contacts: lead._embedded?.contacts?.flatMap((group) =>
 					group.id.contact.flatMap((contact) => contact),
 				),
 				companies: lead._embedded?.companies?.flatMap((group) =>
 					group.id.company.flatMap((company) => company),
 				),
-				source: lead._embedded?.source?.filter((_, i) => i === 0),
 			},
 		}))
 		.map(clearNullableProps);

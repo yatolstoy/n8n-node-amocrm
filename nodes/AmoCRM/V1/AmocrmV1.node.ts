@@ -10,7 +10,7 @@ import { router } from './resources/router';
 
 import * as account from './resources/account';
 import * as contacts from './resources/contacts';
-// import * as leads from './resources/leads';
+import * as leads from './resources/leads';
 // import * as companies from './resources/companies';
 // import * as unsorted from './resources/unsorted';
 // import * as pipelines from './resources/pipelines';
@@ -59,14 +59,6 @@ import * as contacts from './resources/contacts';
 // 			// 			value: 'companies',
 // 			// 		},
 // 			// 		{
-// 			// 			name: 'Contact',
-// 			// 			value: 'contacts',
-// 			// 		},
-// 			// 		{
-// 			// 			name: 'Lead',
-// 			// 			value: 'leads',
-// 			// 		},
-// 			// 		{
 // 			// 			name: 'Pipeline',
 // 			// 			value: 'pipelines',
 // 			// 		},
@@ -84,10 +76,7 @@ import * as contacts from './resources/contacts';
 // 			// 	required: true,
 // 			// 	description: 'Select resource',
 // 			// },
-// 			// ...account.descriptions,
-// 			// ...leads.descriptions,
 // 			// ...unsorted.descriptions,
-// 			// ...contacts.descriptions,
 // 			// ...companies.descriptions,
 // 			// ...pipelines.descriptions,
 // 			// ...statuses.descriptions,
@@ -141,11 +130,16 @@ export class AmocrmV1 implements INodeType {
 							name: 'Contact',
 							value: 'contacts',
 						},
+						{
+							name: 'Lead',
+							value: 'leads',
+						},
 					],
 					default: 'account',
 				},
 				...account.descriptions,
 				...contacts.descriptions,
+				...leads.descriptions,
 			],
 		};
 	}

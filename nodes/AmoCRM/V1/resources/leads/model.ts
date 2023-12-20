@@ -24,7 +24,7 @@ const modelDescription: INodeProperties[] = [
 		typeOptions: {
 			loadOptionsMethod: 'getPipelines',
 		},
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Status Name or ID',
@@ -34,9 +34,9 @@ const modelDescription: INodeProperties[] = [
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getStatuses',
+			loadOptionsMethod: 'getStatusesWithoutUnsorted',
 		},
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Created by User Name or ID',
@@ -44,11 +44,11 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getActiveUsers',
+			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Updated by User Name or ID',
@@ -56,11 +56,11 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getActiveUsers',
+			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Responsible User Name or ID',
@@ -68,11 +68,11 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		default: '',
 		typeOptions: {
-			loadOptionsMethod: 'getActiveUsers',
+			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		noDataExpression: true,
+		// noDataExpression: true,
 	},
 	{
 		displayName: 'Closed At',
@@ -104,6 +104,17 @@ const modelDescription: INodeProperties[] = [
 		},
 		noDataExpression: false,
 	},
+	// {
+	// 	displayName: 'Source Name or ID',
+	// 	name: 'source',
+	// 	type: 'options',
+	// 	description:
+	// 		'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+	// 	default: '',
+	// 	typeOptions: {
+	// 		loadOptionsMethod: 'getSources',
+	// 	},
+	// },
 	addCustomFieldDescription('getLeadCustomFields'),
 ];
 

@@ -56,5 +56,9 @@ export type ITypeField =
 	| 'supplier';
 
 export interface ICustomFieldValuesForm {
-	custom_field: Array<{ data: string; value: string; enum_id: number; enum_code: string }>;
+	custom_field: Array<{
+		data: string;
+		value: string;
+		// enum_id: number; enum_code: string
+	}>;
 }

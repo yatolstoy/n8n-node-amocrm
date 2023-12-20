@@ -6,7 +6,7 @@ import { makeLeadModelDescription } from '../model';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['leads'],
-		operation: ['create'],
+		operation: ['createLeads'],
 	},
 };
 
@@ -77,24 +77,6 @@ export const createLeadModel: INodeProperties[] = [
 							],
 						},
 					],
-				},
-			],
-		},
-		{
-			displayName: 'Source',
-			name: 'source',
-			values: [
-				{
-					displayName: 'External ID',
-					name: 'external_id',
-					type: 'number',
-					default: 0,
-				},
-				{
-					displayName: 'Type',
-					name: 'type',
-					type: 'hidden',
-					default: 'widget',
 				},
 			],
 		},

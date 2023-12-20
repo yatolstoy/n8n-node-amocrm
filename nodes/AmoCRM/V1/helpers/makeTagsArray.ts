@@ -4,5 +4,7 @@ export function makeTagsArray(group: { id: string[] | number[] }) {
 		return group.id.map((val) => {
 			if (typeof val === 'number') return { id: val };
 			if (typeof val === 'string') return { name: val };
+			return { name: String(val) };
 		});
+	return [];
 }

@@ -6,6 +6,7 @@ import {
 	IExecuteFunctions,
 	IHookFunctions,
 	ILoadOptionsFunctions,
+	NodeOperationError,
 } from 'n8n-workflow';
 export async function apiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
@@ -25,7 +26,16 @@ export async function apiRequest(
 			'content-type': 'application/json; charset=utf-8',
 		},
 	};
-	return this.helpers.httpRequestWithAuthentication.call(this, 'amocrmOAuth2Api', options);
+	try {
+		return await this.helpers.httpRequestWithAuthentication.call(this, 'amocrmOAuth2Api', options);
+	} catch (e) {
+		const concreteErrorsDescription = e.cause?.response?.data['validation-errors'];
+		if (concreteErrorsDescription)
+			throw new NodeOperationError(this.getNode(), 'Incorrect fields', {
+				description: JSON.stringify(concreteErrorsDescription, null, 2),
+			});
+		throw e;
+	}
 }
 
 export async function apiRequestAllItems(

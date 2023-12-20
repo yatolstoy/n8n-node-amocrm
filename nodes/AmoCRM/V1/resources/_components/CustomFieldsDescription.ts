@@ -1,5 +1,7 @@
 import { INodeProperties } from 'n8n-workflow';
 import { ICustomFieldValuesForm, ITypeField } from '../../Interface';
+import { isJson } from '../../helpers/isJson';
+import { isNumber } from '../../helpers/isNumber';
 
 export const addCustomFieldDescription = (loadOptionsMethod: string): INodeProperties => {
 	return {
@@ -26,18 +28,18 @@ export const addCustomFieldDescription = (loadOptionsMethod: string): INodePrope
 						default: '',
 						required: true,
 					},
-					{
-						displayName: 'Enum ID',
-						name: 'enum_id',
-						type: 'number',
-						default: null,
-					},
-					{
-						displayName: 'Enum Code',
-						name: 'enum_code',
-						type: 'string',
-						default: '',
-					},
+					// {
+					// 	displayName: 'Enum ID',
+					// 	name: 'enum_id',
+					// 	type: 'number',
+					// 	default: null,
+					// },
+					// {
+					// 	displayName: 'Enum Code',
+					// 	name: 'enum_code',
+					// 	type: 'string',
+					// 	default: '',
+					// },
 					{
 						displayName: 'Value',
 						name: 'value',
@@ -66,6 +68,30 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 			// tslint:disable-next-line: variable-name
 			let value, enum_id, enum_code;
 			const data = JSON.parse(cf.data) as { id: number; type: ITypeField };
+			if (typeof cf.value === 'object') {
+				return [...acc, { field_id: data.id, values: cf.value }];
+			}
+			if (typeof cf.value === 'string' && isJson(cf.value) && !isNumber(cf.value)) {
+				return [...acc, { field_id: data.id, values: JSON.parse(cf.value) }];
+			}
+			if (
+				typeof cf.value === 'string' &&
+				['multiselect', 'radiobutton', 'category'].includes(data.type) &&
+				cf.value.split(',').length > 1
+			) {
+				return [
+					...acc,
+					{
+						field_id: data.id,
+						values: cf.value.split(',').map((v) => {
+							if (isNumber(v)) {
+								return { enum_id: Number(v) };
+							}
+							return { value: v };
+						}),
+					},
+				];
+			}
 			switch (data.type) {
 				case 'checkbox':
 					value = Boolean(cf.value);
@@ -104,34 +130,38 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 					value = String(cf.value);
 					break;
 				case 'select':
-					value = String(cf.value);
-					enum_id = Number(cf.enum_id);
-					enum_code = String(cf.enum_code);
+					if (isNumber(cf.value)) {
+						enum_id = Number(cf.value);
+					} else {
+						value = String(cf.value);
+					}
 					break;
 				case 'multiselect':
-					value = String(cf.value);
-					enum_id = Number(cf.enum_id);
-					enum_code = String(cf.enum_code);
+					if (isNumber(cf.value)) {
+						enum_id = Number(cf.value);
+					} else {
+						value = String(cf.value);
+					}
 					break;
 				case 'radiobutton':
-					value = String(cf.value);
-					enum_id = Number(cf.enum_id);
-					enum_code = String(cf.enum_code);
+					if (isNumber(cf.value)) {
+						enum_id = Number(cf.value);
+					} else {
+						value = String(cf.value);
+					}
 					break;
 				case 'category':
-					value = String(cf.value);
-					enum_id = Number(cf.enum_id);
-					enum_code = String(cf.enum_code);
+					if (isNumber(cf.value)) {
+						enum_id = Number(cf.value);
+					} else {
+						value = String(cf.value);
+					}
 					break;
 				case 'multitext':
-					enum_id = Number(cf.enum_id);
-					enum_code = String(cf.enum_code);
 					value = String(cf.value);
 					break;
 				case 'smart_address':
 					value = String(cf.value);
-					enum_id = Number(cf.enum_id);
-					enum_code = String(cf.enum_code);
 					break;
 				case 'legal_entity':
 					value = JSON.parse(cf.value);
@@ -167,6 +197,7 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 			} else {
 				acc.push({ field_id: data.id, values: [{ value, enum_id, enum_code }] });
 			}
+			console.log(JSON.stringify(acc));
 			return acc;
 		},
 		[],

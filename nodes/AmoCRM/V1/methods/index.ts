@@ -12,6 +12,7 @@ import {
 	ITag,
 } from '../Interface';
 import { apiRequest, apiRequestAllItems } from '../transport';
+import { statusPropertyOptions } from '../helpers/statusPropertyOptions';
 
 export async function getPipelines(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 	const responseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
@@ -30,12 +31,12 @@ export async function getPipelines(this: ILoadOptionsFunctions): Promise<INodePr
 	);
 }
 
-export async function getStatuses(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+async function getAllStatuses(this: ILoadOptionsFunctions): Promise<IStatus[]> {
 	const pipelinesResponseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
 	if (!pipelinesResponseData?._embedded?.pipelines) {
 		throw new NodeOperationError(this.getNode(), 'No data got returned');
 	}
-	const resultArray: INodePropertyOptions[] = [];
+	const resultArray: IStatus[] = [];
 	for (const pipeline of pipelinesResponseData._embedded.pipelines) {
 		const responseData = await apiRequest.call(
 			this,
@@ -43,17 +44,29 @@ export async function getStatuses(this: ILoadOptionsFunctions): Promise<INodePro
 			`leads/pipelines/${pipeline.id}/statuses`,
 			{},
 		);
-		const statuses: IStatus[] = responseData?._embedded?.statuses;
-		if (statuses) {
-			statuses.forEach((status: IStatus) => {
-				resultArray.push({
-					name: `${status.name} (${pipeline.name})`,
-					value: status.id,
-				});
-			});
-		}
+		const statuses: IStatus[] = responseData?._embedded?.statuses.map((s: IStatus) => ({
+			...s,
+			pipeline_name: pipeline.name,
+		}));
+		if (statuses) resultArray.push(...statuses);
 	}
 	return resultArray;
+}
+
+export async function getStatuses(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const statuses = await getAllStatuses.call(this);
+	if (statuses) return statuses.map(statusPropertyOptions);
+	return [];
+}
+
+export async function getStatusesWithoutUnsorted(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
+	const statuses = await getAllStatuses.call(this);
+	return [
+		{ name: 'Not Selected', value: 0 },
+		...statuses.filter((s) => !s.type).map(statusPropertyOptions),
+	];
 }
 
 export async function getCatalogs(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
@@ -270,6 +283,12 @@ export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INode
 		name: field.name,
 		value: field.id,
 	}));
+}
+
+export async function getSources(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const sources = await apiRequest.call(this, 'GET', 'sources', {});
+	console.log(sources);
+	return [];
 }
 
 export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
