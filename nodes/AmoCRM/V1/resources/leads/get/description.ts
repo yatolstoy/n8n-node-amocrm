@@ -72,7 +72,7 @@ export const description: ILeadsProperties = [
 			type: 'multiOptions',
 			default: [],
 			typeOptions: {
-				loadOptionsMethod: 'getActiveUsers',
+				loadOptionsMethod: 'getActiveUsersWithRobot',
 			},
 			description:
 				'Select users. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
@@ -84,7 +84,7 @@ export const description: ILeadsProperties = [
 			type: 'multiOptions',
 			default: [],
 			typeOptions: {
-				loadOptionsMethod: 'getActiveUsers',
+				loadOptionsMethod: 'getActiveUsersWithRobot',
 			},
 			description:
 				'Select users. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',

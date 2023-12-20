@@ -15,7 +15,7 @@ export function clearNullableProps(obj: IDataObject | null): IDataObject | undef
 			return acc;
 		}
 		//check nullable props on empty
-		if (val) {
+		if (!!val || typeof val === 'boolean') {
 			acc[key] = obj[key];
 		}
 		return acc;

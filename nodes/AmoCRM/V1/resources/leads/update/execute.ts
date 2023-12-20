@@ -65,6 +65,7 @@ export async function execute(
 			},
 		}))
 		.map(clearNullableProps);
+	console.log(JSON.stringify(body, null, 2));
 	const responseData = await apiRequest.call(this, requestMethod, endpoint, body);
 	return this.helpers.returnJsonArray(responseData);
 }

@@ -71,9 +71,15 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 			if (typeof cf.value === 'object') {
 				return [...acc, { field_id: data.id, values: cf.value }];
 			}
-			if (typeof cf.value === 'string' && isJson(cf.value) && !isNumber(cf.value)) {
+			if (
+				typeof cf.value === 'string' &&
+				isJson(cf.value) &&
+				!isNumber(cf.value) &&
+				typeof JSON.parse(cf.value) !== 'boolean'
+			) {
 				return [...acc, { field_id: data.id, values: JSON.parse(cf.value) }];
 			}
+
 			if (
 				typeof cf.value === 'string' &&
 				['multiselect', 'radiobutton', 'category'].includes(data.type) &&
@@ -84,16 +90,25 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 					{
 						field_id: data.id,
 						values: cf.value.split(',').map((v) => {
-							if (isNumber(v)) {
-								return { enum_id: Number(v) };
+							const value = v.trim();
+							if (isNumber(value)) {
+								return { enum_id: Number(value) };
 							}
-							return { value: v };
+							return { value };
 						}),
 					},
 				];
 			}
+
 			switch (data.type) {
 				case 'checkbox':
+					if (
+						typeof cf.value === 'string' &&
+						['нет', 'no', 'false', 'off'].includes(cf.value.toLowerCase())
+					) {
+						value = false;
+						break;
+					}
 					value = Boolean(cf.value);
 					break;
 				case 'date':
@@ -186,7 +201,7 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 				default:
 					break;
 			}
-			if (!value && !enum_id && !enum_code) return acc;
+			if (typeof value === 'undefined' && !enum_id && !enum_code) return acc;
 			const existRecord = acc.filter((el) => el.field_id === data.id);
 			if (existRecord.length) {
 				const values = [...existRecord[0].values, { value, enum_id, enum_code }];
