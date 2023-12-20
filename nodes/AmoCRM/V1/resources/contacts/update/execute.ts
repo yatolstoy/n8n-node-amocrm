@@ -4,6 +4,7 @@ import { ICustomFieldValuesForm } from '../../../Interface';
 
 import { apiRequest } from '../../../transport';
 import { makeCustomFieldReqObject } from '../../_components/CustomFieldsDescription';
+import { makeTagsArray } from '../../../helpers/makeTagsArray';
 
 interface IForm {
 	contact: Array<{
@@ -53,14 +54,7 @@ export async function execute(
 				contact.custom_fields_values && makeCustomFieldReqObject(contact.custom_fields_values),
 			_embedded: {
 				...contact._embedded,
-				tags: contact._embedded?.tags?.flatMap((group) => {
-					if (typeof group.id === 'string') return [{ name: group.id }];
-					if (typeof group.id === 'object')
-						return group.id.map((val) => {
-							if (typeof val === 'number') return { id: val };
-							if (typeof val === 'string') return { name: val };
-						});
-				}),
+				tags: contact._embedded?.tags?.flatMap(makeTagsArray),
 			},
 		}))
 		.map(clearNullableProps);
