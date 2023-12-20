@@ -1,6 +1,6 @@
 import { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import { INumRange, IStringRange } from '../../Interface';
-import { getTimestampFromDateString } from './DateDescription';
+import { getTimestampFromDateString } from '../../helpers/getTimestampFromDateString';
 
 export const addDateRangeDescription = (
 	displayName: string,

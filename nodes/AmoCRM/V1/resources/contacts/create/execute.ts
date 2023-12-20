@@ -4,8 +4,8 @@ import { ICustomFieldValuesForm } from '../../../Interface';
 
 import { apiRequest } from '../../../transport';
 import { makeCustomFieldReqObject } from '../../_components/CustomFieldsDescription';
-import { getTimestampFromDateString } from '../../_components/DateDescription';
 import { makeTagsArray } from '../../../helpers/makeTagsArray';
+import { getTimestampFromDateString } from '../../../helpers/getTimestampFromDateString';
 
 interface IFormContact {
 	contact: Array<{

@@ -5,6 +5,7 @@ import { ICustomFieldValuesForm } from '../../../Interface';
 import { apiRequest } from '../../../transport';
 import { makeCustomFieldReqObject } from '../../_components/CustomFieldsDescription';
 import { makeTagsArray } from '../../../helpers/makeTagsArray';
+import { getTimestampFromDateString } from '../../../helpers/getTimestampFromDateString';
 
 interface IForm {
 	contact: Array<{
@@ -50,6 +51,8 @@ export async function execute(
 	const body = collection.contact
 		.map((contact) => ({
 			...contact,
+			created_at: getTimestampFromDateString(contact.created_at),
+			updated_at: getTimestampFromDateString(contact.updated_at),
 			custom_fields_values:
 				contact.custom_fields_values && makeCustomFieldReqObject(contact.custom_fields_values),
 			_embedded: {
