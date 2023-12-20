@@ -17,7 +17,7 @@ interface IForm {
 		custom_fields_values?: ICustomFieldValuesForm;
 		_embedded?: {
 			tags?: Array<{
-				id: number[];
+				id: number[] | string[];
 			}>;
 		};
 		request_id: string;
@@ -53,7 +53,14 @@ export async function execute(
 				contact.custom_fields_values && makeCustomFieldReqObject(contact.custom_fields_values),
 			_embedded: {
 				...contact._embedded,
-				tags: contact._embedded?.tags?.flatMap((group) => group.id.map((id) => ({ id }))),
+				tags: contact._embedded?.tags?.flatMap((group) => {
+					if (typeof group.id === 'string') return [{ name: group.id }];
+					if (typeof group.id === 'object')
+						return group.id.map((val) => {
+							if (typeof val === 'number') return { id: val };
+							if (typeof val === 'string') return { name: val };
+						});
+				}),
 			},
 		}))
 		.map(clearNullableProps);
