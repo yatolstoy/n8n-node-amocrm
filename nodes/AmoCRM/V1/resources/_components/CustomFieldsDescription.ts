@@ -197,7 +197,6 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 			} else {
 				acc.push({ field_id: data.id, values: [{ value, enum_id, enum_code }] });
 			}
-			console.log(JSON.stringify(acc));
 			return acc;
 		},
 		[],

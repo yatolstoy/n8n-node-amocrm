@@ -287,7 +287,6 @@ export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INode
 
 export async function getSources(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 	const sources = await apiRequest.call(this, 'GET', 'sources', {});
-	console.log(sources);
 	return [];
 }
 
