@@ -3,7 +3,7 @@ import { IAmo } from './interfaces';
 
 import * as account from './account';
 import * as contacts from './contacts';
-// import * as leads from './leads';
+import * as leads from './leads';
 // import * as unsorted from './unsorted';
 // import * as pipelines from './pipelines';
 // import * as statuses from './statuses';
@@ -27,10 +27,10 @@ export async function router(this: IExecuteFunctions): Promise<INodeExecutionDat
 				responseData = await account[amo.operation].execute.call(this, i);
 			} else if (amo.resource === 'contacts') {
 				responseData = await contacts[amo.operation].execute.call(this, i);
+			} else if (amo.resource === 'leads') {
+				responseData = await leads[amo.operation].execute.call(this, i);
 			}
-			//else if (amo.resource === 'leads') {
-			// 	responseData = await leads[amo.operation].execute.call(this, i);
-			// } else if (amo.resource === 'unsorted') {
+			// else if (amo.resource === 'unsorted') {
 			// 	responseData = await unsorted[amo.operation].execute.call(this, i);
 			// } else if (amo.resource === 'pipelines') {
 			// 	responseData = await pipelines[amo.operation].execute.call(this, i);

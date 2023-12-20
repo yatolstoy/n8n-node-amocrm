@@ -2,8 +2,8 @@ import { AllEntities, Entity, PropertiesOf } from 'n8n-workflow';
 
 type IAmoMap = {
 	account: 'getInfo';
-	leads: 'get' | 'create' | 'update';
-	contacts: 'get' | 'create' | 'update';
+	leads: 'getLeads' | 'createLeads' | 'updateLeads';
+	contacts: 'getContacts' | 'createContacts' | 'updateContacts';
 	companies: 'get' | 'create' | 'update';
 	unsorted: 'get' | 'create' | 'accept' | 'link' | 'reject' | 'summary';
 	pipelines: 'get' | 'create' | 'update' | 'remove';

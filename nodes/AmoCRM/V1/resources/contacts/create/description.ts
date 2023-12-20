@@ -6,7 +6,7 @@ import { makeContactModelDescription } from '../model';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['contacts'],
-		operation: ['create'],
+		operation: ['createContacts'],
 	},
 };
 

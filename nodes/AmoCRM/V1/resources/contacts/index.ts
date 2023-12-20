@@ -1,9 +1,9 @@
 import { INodeProperties } from 'n8n-workflow';
 
-import * as get from './get';
-import * as create from './create';
-import * as update from './update';
-export { get, create, update };
+import * as getContacts from './get';
+import * as createContacts from './create';
+import * as updateContacts from './update';
+export { getContacts, createContacts, updateContacts };
 
 export const descriptions: INodeProperties[] = [
 	{
@@ -19,26 +19,26 @@ export const descriptions: INodeProperties[] = [
 		options: [
 			{
 				name: 'Get Contacts List',
-				value: 'get',
+				value: 'getContacts',
 				description: 'Get list of contacts',
 				action: 'Get list of contacts',
 			},
 			{
-				name: 'Create',
-				value: 'create',
+				name: 'Create Contacts',
+				value: 'createContacts',
 				description: 'Create new contacts',
 				action: 'Create new contacts',
 			},
 			{
-				name: 'Update',
-				value: 'update',
-				description: 'Update contacts',
+				name: 'Update Contacts',
+				value: 'updateContacts',
+				description: 'Update contacts by ID',
 				action: 'Update contacts',
 			},
 		],
-		default: 'get',
+		default: 'getContacts',
 	},
-	...get.description,
-	...create.description,
-	...update.description,
+	...getContacts.description,
+	...createContacts.description,
+	...updateContacts.description,
 ];

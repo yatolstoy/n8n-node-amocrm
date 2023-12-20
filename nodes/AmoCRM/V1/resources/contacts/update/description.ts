@@ -7,7 +7,7 @@ import { addRequestId } from '../../_components/RequestId';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['contacts'],
-		operation: ['update'],
+		operation: ['updateContacts'],
 	},
 };
 

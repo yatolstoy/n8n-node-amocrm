@@ -11,7 +11,7 @@ import { addWithDescription } from '../../_components/WithDescription';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['contacts'],
-		operation: ['get'],
+		operation: ['getContacts'],
 	},
 };
 
