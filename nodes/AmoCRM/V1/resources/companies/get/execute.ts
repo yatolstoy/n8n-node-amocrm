@@ -3,6 +3,7 @@ import { INumRange, IStringRange } from '../../../Interface';
 
 import { apiRequest, apiRequestAllItems } from '../../../transport';
 import { makeRangeProperty } from '../../_components/DateRangeDescription';
+import { stringToArray } from '../../../helpers/stringToArray';
 
 interface IFilter {
 	id?: number[];
@@ -51,8 +52,8 @@ export async function execute(
 	if (Object.keys(filterWithoutQuery).length) {
 		qs.filter = {
 			...filterWithoutQuery,
-			id: filterWithoutQuery.id?.split(',').map((el) => Number(el.trim())),
-			name: filterWithoutQuery.name?.split(',').map((el) => el.trim()),
+			id: stringToArray(filterWithoutQuery.id).filter((el) => typeof el === 'number'),
+			name: stringToArray(filterWithoutQuery.name).filter((el) => typeof el === 'string'),
 			created_at: makeRangeProperty(filterWithoutQuery.created_at?.dateRangeCustomProperties),
 			updated_at: makeRangeProperty(filterWithoutQuery.updated_at?.dateRangeCustomProperties),
 			closest_task_at: makeRangeProperty(

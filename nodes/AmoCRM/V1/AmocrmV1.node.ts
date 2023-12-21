@@ -12,7 +12,7 @@ import * as account from './resources/account';
 import * as contacts from './resources/contacts';
 import * as leads from './resources/leads';
 import * as tasks from './resources/tasks';
-// import * as companies from './resources/companies';
+import * as companies from './resources/companies';
 // import * as unsorted from './resources/unsorted';
 // import * as pipelines from './resources/pipelines';
 // import * as statuses from './resources/statuses';
@@ -54,10 +54,6 @@ import * as tasks from './resources/tasks';
 // 			// 		{
 // 			// 			name: 'Catalog',
 // 			// 			value: 'catalogs',
-// 			// 		},
-// 			// 		{
-// 			// 			name: 'Company',
-// 			// 			value: 'companies',
 // 			// 		},
 // 			// 		{
 // 			// 			name: 'Pipeline',
@@ -128,6 +124,10 @@ export class AmocrmV1 implements INodeType {
 							value: 'account',
 						},
 						{
+							name: 'Company',
+							value: 'companies',
+						},
+						{
 							name: 'Contact',
 							value: 'contacts',
 						},
@@ -143,6 +143,7 @@ export class AmocrmV1 implements INodeType {
 					default: 'account',
 				},
 				...account.descriptions,
+				...companies.descriptions,
 				...contacts.descriptions,
 				...leads.descriptions,
 				...tasks.descriptions,

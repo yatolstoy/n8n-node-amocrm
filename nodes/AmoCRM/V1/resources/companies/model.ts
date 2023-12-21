@@ -3,6 +3,12 @@ import { addCustomFieldDescription } from '../_components/CustomFieldsDescriptio
 
 const modelDescription: INodeProperties[] = [
 	{
+		displayName: 'ID',
+		name: 'id',
+		type: 'number',
+		default: undefined,
+	},
+	{
 		displayName: 'Name',
 		name: 'name',
 		type: 'string',

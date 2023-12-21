@@ -5,6 +5,7 @@ import * as account from './account';
 import * as contacts from './contacts';
 import * as leads from './leads';
 import * as tasks from './tasks';
+import * as companies from './companies';
 // import * as unsorted from './unsorted';
 // import * as pipelines from './pipelines';
 // import * as statuses from './statuses';
@@ -32,6 +33,8 @@ export async function router(this: IExecuteFunctions): Promise<INodeExecutionDat
 				responseData = await leads[amo.operation].execute.call(this, i);
 			} else if (amo.resource === 'tasks') {
 				responseData = await tasks[amo.operation].execute.call(this, i);
+			} else if (amo.resource === 'companies') {
+				responseData = await companies[amo.operation].execute.call(this, i);
 			}
 			// else if (amo.resource === 'unsorted') {
 			// 	responseData = await unsorted[amo.operation].execute.call(this, i);

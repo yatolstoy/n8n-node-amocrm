@@ -7,12 +7,12 @@ import { addRequestId } from '../../_components/RequestId';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['companies'],
-		operation: ['create'],
+		operation: ['createCompany'],
 	},
 };
 
 export const createCompanyModel: INodeProperties[] = [
-	...makeCompanyModelDescription(),
+	...makeCompanyModelDescription().filter((el) => el.name !== 'id'),
 	addRequestId(),
 ];
 

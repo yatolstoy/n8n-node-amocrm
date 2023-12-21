@@ -1,9 +1,9 @@
 import { INodeProperties } from 'n8n-workflow';
 
-import * as get from './get';
-import * as create from './create';
-import * as update from './update';
-export { get, create, update };
+import * as getCompany from './get';
+import * as createCompany from './create';
+import * as updateCompany from './update';
+export { getCompany, createCompany, updateCompany };
 
 export const descriptions: INodeProperties[] = [
 	{
@@ -19,26 +19,26 @@ export const descriptions: INodeProperties[] = [
 		options: [
 			{
 				name: 'Get Companies List',
-				value: 'get',
+				value: 'getCompany',
 				description: 'Get list of companies',
 				action: 'Get list of companies',
 			},
 			{
 				name: 'Create',
-				value: 'create',
+				value: 'createCompany',
 				description: 'Create new companies',
 				action: 'Create new companies',
 			},
 			{
 				name: 'Update',
-				value: 'update',
+				value: 'updateCompany',
 				description: 'Update companies',
 				action: 'Update companies',
 			},
 		],
-		default: 'get',
+		default: 'getCompany',
 	},
-	...get.description,
-	...create.description,
-	...update.description,
+	...getCompany.description,
+	...createCompany.description,
+	...updateCompany.description,
 ];

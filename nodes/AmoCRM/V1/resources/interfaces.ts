@@ -4,7 +4,7 @@ type IAmoMap = {
 	account: 'getInfo';
 	leads: 'getLeads' | 'createLeads' | 'updateLeads';
 	contacts: 'getContacts' | 'createContacts' | 'updateContacts';
-	companies: 'get' | 'create' | 'update';
+	companies: 'getCompany' | 'createCompany' | 'updateCompany';
 	unsorted: 'get' | 'create' | 'accept' | 'link' | 'reject' | 'summary';
 	pipelines: 'get' | 'create' | 'update' | 'remove';
 	statuses: 'get' | 'create' | 'update' | 'remove';

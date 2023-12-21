@@ -11,7 +11,7 @@ import { addWithDescription } from '../../_components/WithDescription';
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
 		resource: ['companies'],
-		operation: ['get'],
+		operation: ['getCompany'],
 	},
 };
 
@@ -26,50 +26,53 @@ export const description: ICompaniesProperties = [
 			description: 'Search query',
 		},
 		{
-			displayName: 'List of company ids',
+			displayName: 'List of Company IDs',
 			name: 'id',
 			type: 'string',
 			default: '',
 			description: 'Companies IDs separated by commas',
 		},
 		{
-			displayName: 'List of names',
+			displayName: 'List of Names',
 			name: 'name',
 			type: 'string',
 			default: '',
 			description: 'Names separated by commas',
 		},
 		{
-			displayName: 'Created by users',
+			displayName: 'Created by Users',
 			name: 'created_by',
 			type: 'multiOptions',
 			default: [],
 			typeOptions: {
 				loadOptionsMethod: 'getActiveUsers',
 			},
-			description: 'Select users',
+			description:
+				'Select users. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 			noDataExpression: true,
 		},
 		{
-			displayName: 'Updated by users',
+			displayName: 'Updated by Users',
 			name: 'updated_by',
 			type: 'multiOptions',
 			default: [],
 			typeOptions: {
 				loadOptionsMethod: 'getActiveUsers',
 			},
-			description: 'Select users',
+			description:
+				'Select users. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 			noDataExpression: true,
 		},
 		{
-			displayName: 'Responsible users',
+			displayName: 'Responsible User Names or IDs',
 			name: 'responsible_user_id',
 			type: 'multiOptions',
 			default: [],
 			typeOptions: {
 				loadOptionsMethod: 'getActiveUsers',
 			},
-			description: 'Select users',
+			description:
+				'Select users. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 			noDataExpression: true,
 		},
 		addDateRangeDescription('Created at', 'created_at'),
@@ -86,7 +89,7 @@ export const description: ICompaniesProperties = [
 		options: [
 			addSortDescription(undefined, [
 				{
-					name: 'Date update',
+					name: 'Date Update',
 					value: 'updated_at',
 				},
 				{
@@ -96,7 +99,7 @@ export const description: ICompaniesProperties = [
 			]),
 			addWithDescription(undefined, [
 				{
-					name: 'Deal-related catalog elements',
+					name: 'Deal-Related Catalog Elements',
 					value: 'catalog_elements',
 				},
 				{
