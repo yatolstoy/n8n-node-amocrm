@@ -319,3 +319,20 @@ export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropert
 		value: field.id,
 	}));
 }
+
+export async function getTaskTypes(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	const accountInfo: IAccount = await apiRequest.call(
+		this,
+		'GET',
+		`account`,
+		{},
+		{ with: 'task_types' },
+	);
+
+	const taskTypes = accountInfo._embedded.task_types;
+
+	return taskTypes.map((field) => ({
+		name: field.name.length > 30 ? `${field.name.slice(0, 30)}...` : field.name,
+		value: field.id,
+	}));
+}

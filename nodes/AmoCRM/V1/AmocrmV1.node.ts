@@ -11,6 +11,7 @@ import { router } from './resources/router';
 import * as account from './resources/account';
 import * as contacts from './resources/contacts';
 import * as leads from './resources/leads';
+import * as tasks from './resources/tasks';
 // import * as companies from './resources/companies';
 // import * as unsorted from './resources/unsorted';
 // import * as pipelines from './resources/pipelines';
@@ -134,12 +135,17 @@ export class AmocrmV1 implements INodeType {
 							name: 'Lead',
 							value: 'leads',
 						},
+						{
+							name: 'Task',
+							value: 'tasks',
+						},
 					],
 					default: 'account',
 				},
 				...account.descriptions,
 				...contacts.descriptions,
 				...leads.descriptions,
+				...tasks.descriptions,
 			],
 		};
 	}

@@ -2,6 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 import { ICustomFieldValuesForm, ITypeField } from '../../Interface';
 import { isJson } from '../../helpers/isJson';
 import { isNumber } from '../../helpers/isNumber';
+import { stringToArray } from '../../helpers/stringToArray';
 
 export const addCustomFieldDescription = (loadOptionsMethod: string): INodeProperties => {
 	return {
@@ -89,13 +90,9 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 					...acc,
 					{
 						field_id: data.id,
-						values: cf.value.split(',').map((v) => {
-							const value = v.trim();
-							if (isNumber(value)) {
-								return { enum_id: Number(value) };
-							}
-							return { value };
-						}),
+						values: stringToArray(cf.value).map((value) =>
+							typeof value === 'number' ? { enum_id: value } : { value },
+						),
 					},
 				];
 			}
