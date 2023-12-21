@@ -9,7 +9,7 @@ type IAmoMap = {
 	pipelines: 'get' | 'create' | 'update' | 'remove';
 	statuses: 'get' | 'create' | 'update' | 'remove';
 	catalogs: 'get' | 'create' | 'update' | 'getElements' | 'createElements' | 'updateElements';
-	tasks: 'getTasks' | 'createTasks' | 'updateTasks' | 'accomplishTasks';
+	tasks: 'getTasks' | 'createTasks' | 'updateTasks';
 };
 
 export type IAmo = AllEntities<IAmoMap>;
