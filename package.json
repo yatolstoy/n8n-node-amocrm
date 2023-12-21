@@ -35,7 +35,7 @@
       "dist/credentials/AmoCrmOauth2.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Amocrm/AmocrmV4.node.js"
+      "dist/nodes/Amocrm/Amocrm.node.js"
     ]
   },
   "devDependencies": {
