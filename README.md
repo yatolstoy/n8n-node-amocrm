@@ -35,6 +35,7 @@ It supports these operations:
 - Add modify and retrieve contacts
 - Add change and get deals
 - Add modify and retrieve tasks
+- Add modify and retrieve notes
 
 ## Credentials
 
