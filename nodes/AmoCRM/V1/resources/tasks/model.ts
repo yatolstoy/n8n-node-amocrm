@@ -24,13 +24,13 @@ export const taskModelDescription: INodeProperties[] = [
 		displayName: 'Responsible User Name or ID',
 		name: 'responsible_user_id',
 		type: 'options',
-		default: '',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
+		default: 0,
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
 		description:
 			'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
-		// noDataExpression: true,
 	},
 	{
 		displayName: 'Entity Type',
@@ -89,7 +89,8 @@ export const taskModelDescription: INodeProperties[] = [
 		displayName: 'Created By User Name or ID',
 		name: 'created_by',
 		type: 'options',
-		default: '',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
+		default: 0,
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},
@@ -100,7 +101,8 @@ export const taskModelDescription: INodeProperties[] = [
 		displayName: 'Updated By User Name or ID',
 		name: 'updated_by',
 		type: 'options',
-		default: '',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
+		default: 0,
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsersWithRobot',
 		},

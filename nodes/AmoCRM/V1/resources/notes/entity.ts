@@ -176,9 +176,10 @@ export const getNotesDescription = (
 						displayName: 'Call Responsible Name or ID',
 						name: 'call_responsible',
 						type: 'options',
-						default: '',
+						// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
+						default: 0,
 						typeOptions: {
-							loadOptionsMethod: 'getActiveUsers',
+							loadOptionsMethod: 'getActiveUsersWithRobot',
 						},
 						description:
 							'Select user. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
