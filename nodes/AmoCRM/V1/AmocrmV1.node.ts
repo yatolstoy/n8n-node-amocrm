@@ -1,4 +1,5 @@
 /* eslint-disable n8n-nodes-base/node-filename-against-convention */
+/* eslint-disable n8n-nodes-base/node-filename-against-convention */
 import {
 	IExecuteFunctions,
 	INodeType,
@@ -13,6 +14,7 @@ import * as contacts from './resources/contacts';
 import * as leads from './resources/leads';
 import * as tasks from './resources/tasks';
 import * as companies from './resources/companies';
+import * as notes from './resources/notes';
 
 export class AmocrmV1 implements INodeType {
 	description: INodeTypeDescription;
@@ -62,6 +64,10 @@ export class AmocrmV1 implements INodeType {
 							value: 'leads',
 						},
 						{
+							name: 'Note',
+							value: 'notes',
+						},
+						{
 							name: 'Task',
 							value: 'tasks',
 						},
@@ -73,6 +79,7 @@ export class AmocrmV1 implements INodeType {
 				...contacts.descriptions,
 				...leads.descriptions,
 				...tasks.descriptions,
+				...notes.descriptions,
 			],
 		};
 	}

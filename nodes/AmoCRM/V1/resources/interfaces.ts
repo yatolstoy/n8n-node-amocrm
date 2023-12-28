@@ -5,6 +5,7 @@ type IAmoMap = {
 	leads: 'getLeads' | 'createLeads' | 'updateLeads';
 	contacts: 'getContacts' | 'createContacts' | 'updateContacts';
 	companies: 'getCompany' | 'createCompany' | 'updateCompany';
+	notes: 'getNotes' | 'createNotes' | 'updateNotes';
 	unsorted: 'get' | 'create' | 'accept' | 'link' | 'reject' | 'summary';
 	pipelines: 'get' | 'create' | 'update' | 'remove';
 	statuses: 'get' | 'create' | 'update' | 'remove';
@@ -23,6 +24,7 @@ export type IPipelinesAmo = Entity<IAmoMap, 'pipelines'>;
 export type IStatusesAmo = Entity<IAmoMap, 'statuses'>;
 export type ICatalogsAmo = Entity<IAmoMap, 'catalogs'>;
 export type ITasksAmo = Entity<IAmoMap, 'tasks'>;
+export type INotesAmo = Entity<IAmoMap, 'notes'>;
 
 export type IAccountProperties = PropertiesOf<IAccountAmo>;
 export type ILeadsProperties = PropertiesOf<ILeadsAmo>;
@@ -33,6 +35,7 @@ export type IPipelinesProperties = PropertiesOf<IPipelinesAmo>;
 export type IStatusesProperties = PropertiesOf<IStatusesAmo>;
 export type ICatalogsProperties = PropertiesOf<ICatalogsAmo>;
 export type ITasksProperties = PropertiesOf<ITasksAmo>;
+export type INotesProperties = PropertiesOf<INotesAmo>;
 
 export interface IAttachment {
 	fields: {
