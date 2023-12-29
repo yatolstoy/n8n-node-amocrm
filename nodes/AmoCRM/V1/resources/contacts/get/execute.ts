@@ -43,7 +43,7 @@ export async function execute(
 	//--------------------------------Add filter--------------------------------------
 
 	const filter = this.getNodeParameter('filter', 0) as FilterFromFrontend;
-	if (filter.query?.length) qs.query = filter.query;
+	if (filter.query) qs.query = filter.query;
 
 	const filterWithoutQuery = JSON.parse(JSON.stringify(filter)) as FilterFromFrontend;
 	delete filterWithoutQuery.query;

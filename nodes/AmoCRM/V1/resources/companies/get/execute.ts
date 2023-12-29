@@ -44,7 +44,7 @@ export async function execute(
 	//--------------------------------Add filter--------------------------------------
 
 	const filter = this.getNodeParameter('filter', 0) as FilterFromFrontend;
-	if (filter.query?.length) qs.query = filter.query;
+	if (filter.query) qs.query = filter.query;
 
 	const filterWithoutQuery = JSON.parse(JSON.stringify(filter)) as FilterFromFrontend;
 	delete filterWithoutQuery.query;
@@ -74,7 +74,9 @@ export async function execute(
 		};
 		with?: string[];
 	};
-	qs.with = options.with ? options.with.join(',') : undefined;
+	if (options.with) {
+		qs.with = options.with.join(',');
+	}
 
 	if (options.sort?.sortSettings) {
 		qs.order = {
@@ -109,6 +111,7 @@ export async function execute(
 		return this.helpers.returnJsonArray(responseData);
 	}
 
+	console.log(qs);
 	const responseData = await apiRequest.call(this, requestMethod, endpoint, body, qs);
 	return this.helpers.returnJsonArray(responseData);
 }
