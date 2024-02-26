@@ -51,6 +51,7 @@ export async function execute(
 	const body = collection.contact
 		.map((contact) => ({
 			...contact,
+			id: Number(contact.id),
 			created_at: getTimestampFromDateString(contact.created_at),
 			updated_at: getTimestampFromDateString(contact.updated_at),
 			custom_fields_values:

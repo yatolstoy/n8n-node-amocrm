@@ -31,6 +31,7 @@ export async function execute(
 			const data = { ...task, result: { text: task.resultText }, resultText: undefined };
 			return {
 				...data,
+				id: Number(data.id),
 				complete_till: getTimestampFromDateString(task.complete_till) || 0,
 				entity_id: Number(task.entity_id),
 				result: { text: task.resultText },

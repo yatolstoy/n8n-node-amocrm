@@ -133,7 +133,7 @@ export async function execute(
 				}
 				return params
 					? {
-							id: el.id,
+							id: Number(el.id),
 							entity_id: el.entity_id,
 							created_by: el.created_by,
 							created_at: getTimestampFromDateString(el.created_at),

@@ -55,6 +55,7 @@ export async function execute(
 	const body = leadsCollection.lead
 		.map((lead) => ({
 			...lead,
+			id: Number(lead.id),
 			created_at: getTimestampFromDateString(lead.created_at),
 			updated_at: getTimestampFromDateString(lead.updated_at),
 			custom_fields_values:

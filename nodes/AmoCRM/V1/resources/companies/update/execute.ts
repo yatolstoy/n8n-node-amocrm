@@ -50,6 +50,7 @@ export async function execute(
 	const body = collection.company
 		.map((company) => ({
 			...company,
+			id: Number(company.id),
 			created_at: getTimestampFromDateString(company.created_at),
 			updated_at: getTimestampFromDateString(company.updated_at),
 			custom_fields_values:
