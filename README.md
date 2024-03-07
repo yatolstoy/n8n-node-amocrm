@@ -13,6 +13,7 @@ AmoCRM allows you to save the history of interaction with customers, as well as 
 [Usage](#usage)
 [Resources](#resources)
 [Version history](#version-history)
+[Donation](#donation)
 
 ## Installation
 
@@ -67,3 +68,10 @@ I accept comments and suggestions in Issues repository on github or in telegram 
 
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
 - [amoCRM API Documentation](https://www.amocrm.ru/developers)
+
+## Donation
+
+This code is developed by an enthusiastic developer on his own initiative. By donations you will force me to develop and improve this node. Thank you!
+
+- [Link for donation from Russia](https://yoomoney.ru/to/410012112222938)
+- [Link for donation from another countries](https://appstart.easystaff.io/easylancer/yatolstoy)

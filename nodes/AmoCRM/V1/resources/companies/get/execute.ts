@@ -111,7 +111,6 @@ export async function execute(
 		return this.helpers.returnJsonArray(responseData);
 	}
 
-	console.log(qs);
 	const responseData = await apiRequest.call(this, requestMethod, endpoint, body, qs);
 	return this.helpers.returnJsonArray(responseData);
 }
