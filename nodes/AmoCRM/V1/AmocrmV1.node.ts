@@ -63,6 +63,22 @@ export class AmocrmV1 implements INodeType {
 			],
 			properties: [
 				{
+					displayName: 'Authentication',
+					name: 'authentication',
+					type: 'options',
+					options: [
+						{
+							name: 'Long Lived Token',
+							value: 'longLivedToken',
+						},
+						{
+							name: 'OAuth2',
+							value: 'oAuth2',
+						},
+					],
+					default: 'oAuth2',
+				},
+				{
 					displayName: 'Resource',
 					name: 'resource',
 					type: 'options',

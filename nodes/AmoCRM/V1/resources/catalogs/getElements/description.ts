@@ -7,7 +7,7 @@ import { addFilterDescription } from '../../_components/FilterDescription';
 
 const displayOptions: IDisplayOptions | undefined = {
 	show: {
-		resource: ['Catalogs'],
+		resource: ['catalogs'],
 		operation: ['getCatalogElements'],
 	},
 };
