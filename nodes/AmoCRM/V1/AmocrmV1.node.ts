@@ -39,6 +39,26 @@ export class AmocrmV1 implements INodeType {
 				{
 					name: 'amocrmOAuth2Api',
 					required: true,
+					displayOptions: {
+						show: {
+							authentication: ['oAuth2'],
+						},
+					},
+				},
+				{
+					name: 'amocrmLongLivedApi',
+					required: true,
+					displayOptions: {
+						show: {
+							authentication: ['longLivedToken'],
+						},
+					},
+					testedBy: {
+						request: {
+							method: 'GET',
+							url: 'account',
+						},
+					},
 				},
 			],
 			properties: [

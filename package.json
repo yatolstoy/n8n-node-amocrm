@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-amocrm",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "n8n node for amocrm Api",
   "keywords": [
     "n8n-community-node-package",
@@ -32,7 +32,8 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/amocrmOAuth2Api.credentials.js"
+      "dist/credentials/amocrmOAuth2Api.credentials.js",
+      "dist/credentials/amocrmLongLivedApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/Amocrm/Amocrm.node.js"
