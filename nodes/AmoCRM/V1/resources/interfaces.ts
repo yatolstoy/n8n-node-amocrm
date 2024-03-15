@@ -9,8 +9,14 @@ type IAmoMap = {
 	unsorted: 'get' | 'create' | 'accept' | 'link' | 'reject' | 'summary';
 	pipelines: 'get' | 'create' | 'update' | 'remove';
 	statuses: 'get' | 'create' | 'update' | 'remove';
-	catalogs: 'get' | 'create' | 'update' | 'getElements' | 'createElements' | 'updateElements';
 	tasks: 'getTasks' | 'createTasks' | 'updateTasks';
+	catalogs:
+		| 'getCatalogs'
+		| 'addCatalogs'
+		| 'updateCatalogs'
+		| 'getCatalogElements'
+		| 'addCatalogElements'
+		| 'updateCatalogElements';
 };
 
 export type IAmo = AllEntities<IAmoMap>;
@@ -22,9 +28,9 @@ export type ICompaniesAmo = Entity<IAmoMap, 'companies'>;
 export type IUnsortedAmo = Entity<IAmoMap, 'unsorted'>;
 export type IPipelinesAmo = Entity<IAmoMap, 'pipelines'>;
 export type IStatusesAmo = Entity<IAmoMap, 'statuses'>;
-export type ICatalogsAmo = Entity<IAmoMap, 'catalogs'>;
 export type ITasksAmo = Entity<IAmoMap, 'tasks'>;
 export type INotesAmo = Entity<IAmoMap, 'notes'>;
+export type ICatalogsAmo = Entity<IAmoMap, 'catalogs'>;
 
 export type IAccountProperties = PropertiesOf<IAccountAmo>;
 export type ILeadsProperties = PropertiesOf<ILeadsAmo>;

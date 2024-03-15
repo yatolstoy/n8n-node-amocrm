@@ -7,5 +7,6 @@ export const addRequestId = (displayOptions?: IDisplayOptions): INodeProperties 
 		type: 'string',
 		default: undefined,
 		displayOptions,
+		description: 'The field that will be returned unchanged in the response and will not be saved',
 	};
 };

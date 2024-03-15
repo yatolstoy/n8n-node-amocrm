@@ -15,6 +15,7 @@ import * as leads from './resources/leads';
 import * as tasks from './resources/tasks';
 import * as companies from './resources/companies';
 import * as notes from './resources/notes';
+import * as catalogs from './resources/catalogs';
 
 export class AmocrmV1 implements INodeType {
 	description: INodeTypeDescription;
@@ -52,6 +53,10 @@ export class AmocrmV1 implements INodeType {
 							value: 'account',
 						},
 						{
+							name: 'Catalog',
+							value: 'catalogs',
+						},
+						{
 							name: 'Company',
 							value: 'companies',
 						},
@@ -80,6 +85,7 @@ export class AmocrmV1 implements INodeType {
 				...leads.descriptions,
 				...tasks.descriptions,
 				...notes.descriptions,
+				...catalogs.descriptions,
 			],
 		};
 	}
