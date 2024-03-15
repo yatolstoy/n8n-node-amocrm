@@ -13,8 +13,11 @@ import {
 } from '../Interface';
 import { apiRequest, apiRequestAllItems } from '../transport';
 import { statusPropertyOptions } from '../helpers/statusPropertyOptions';
+import { cacheOptionsRequest } from '../helpers/cacheRequest';
 
-export async function getPipelines(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export const getPipelines = cacheOptionsRequest(async function getPipelines(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
 	const responseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
 
 	if (!responseData?._embedded?.pipelines) {
@@ -29,7 +32,7 @@ export async function getPipelines(this: ILoadOptionsFunctions): Promise<INodePr
 			}),
 		) || []
 	);
-}
+});
 
 async function getAllStatuses(this: ILoadOptionsFunctions): Promise<IStatus[]> {
 	const pipelinesResponseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
@@ -53,23 +56,29 @@ async function getAllStatuses(this: ILoadOptionsFunctions): Promise<IStatus[]> {
 	return resultArray;
 }
 
-export async function getStatuses(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-	const statuses = await getAllStatuses.call(this);
-	if (statuses) return statuses.map(statusPropertyOptions);
-	return [];
-}
-
-export async function getStatusesWithoutUnsorted(
+export const getStatuses = cacheOptionsRequest(async function getStatuses(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const statuses = await getAllStatuses.call(this);
-	return [
-		{ name: 'Not Selected', value: 0 },
-		...statuses.filter((s) => !s.type).map(statusPropertyOptions),
-	];
-}
+	if (statuses) return statuses.map(statusPropertyOptions);
+	return [];
+});
 
-export async function getCatalogs(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export const getStatusesWithoutUnsorted = cacheOptionsRequest(
+	async function getStatusesWithoutUnsorted(
+		this: ILoadOptionsFunctions,
+	): Promise<INodePropertyOptions[]> {
+		const statuses = await getAllStatuses.call(this);
+		return [
+			{ name: 'Not Selected', value: 0 },
+			...statuses.filter((s) => !s.type).map(statusPropertyOptions),
+		];
+	},
+);
+
+export const getCatalogs = cacheOptionsRequest(async function getCatalogs(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
 	const catalogsResponseData = await apiRequestAllItems.call(this, 'GET', 'catalogs', {});
 	return catalogsResponseData.flatMap((data) => {
 		if (!data?._embedded?.catalogs) return [];
@@ -78,9 +87,9 @@ export async function getCatalogs(this: ILoadOptionsFunctions): Promise<INodePro
 			value: catalog.id,
 		}));
 	});
-}
+});
 
-export async function getCatalogElements(
+export const getCatalogElements = cacheOptionsRequest(async function getCatalogElements(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const catalogId = await this.getNodeParameter('catalog_id', 0);
@@ -97,9 +106,11 @@ export async function getCatalogElements(
 			value: el.id,
 		}));
 	});
-}
+});
 
-export async function getActiveUsers(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export const getActiveUsers = cacheOptionsRequest(async function getActiveUsers(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
 	const usersResponseDatas: Array<IResponseData<'users', IAmoUser>> = await apiRequestAllItems.call(
 		this,
 		'GET',
@@ -122,16 +133,16 @@ export async function getActiveUsers(this: ILoadOptionsFunctions): Promise<INode
 			name: user.name,
 			value: user.id,
 		}));
-}
+});
 
-export async function getActiveUsersWithRobot(
+export const getActiveUsersWithRobot = cacheOptionsRequest(async function getActiveUsersWithRobot(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const users = await getActiveUsers.call(this);
 	return [{ name: 'Not Selected', value: 0 }, ...users];
-}
+});
 
-export async function getLeadCustomFields(
+export const getLeadCustomFields = cacheOptionsRequest(async function getLeadCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
@@ -150,9 +161,9 @@ export async function getLeadCustomFields(
 		name: `${field.name} (${field.type})`,
 		value: JSON.stringify({ id: field.id, type: field.type }),
 	}));
-}
+});
 
-export async function getContactCustomFields(
+export const getContactCustomFields = cacheOptionsRequest(async function getContactCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
@@ -171,9 +182,9 @@ export async function getContactCustomFields(
 		name: `${field.name} (${field.type})`,
 		value: JSON.stringify({ id: field.id, type: field.type }),
 	}));
-}
+});
 
-export async function getCompanyCustomFields(
+export const getCompanyCustomFields = cacheOptionsRequest(async function getCompanyCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
@@ -192,9 +203,9 @@ export async function getCompanyCustomFields(
 		name: `${field.name} (${field.type})`,
 		value: JSON.stringify({ id: field.id, type: field.type }),
 	}));
-}
+});
 
-export async function getCustomerCustomFields(
+export const getCustomerCustomFields = cacheOptionsRequest(async function getCustomerCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
@@ -213,30 +224,32 @@ export async function getCustomerCustomFields(
 		name: `${field.name} (${field.type})`,
 		value: JSON.stringify({ id: field.id, type: field.type }),
 	}));
-}
+});
 
-export async function getCustomerSegmentCustomFields(
-	this: ILoadOptionsFunctions,
-): Promise<INodePropertyOptions[]> {
-	const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
-		await apiRequestAllItems.call(this, 'GET', `customers/segments/custom_fields`, {});
+export const getCustomerSegmentCustomFields = cacheOptionsRequest(
+	async function getCustomerSegmentCustomFields(
+		this: ILoadOptionsFunctions,
+	): Promise<INodePropertyOptions[]> {
+		const cfResponseData: Array<IResponseData<'custom_fields', ICustomField>> =
+			await apiRequestAllItems.call(this, 'GET', `customers/segments/custom_fields`, {});
 
-	const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
-		acc.push(...response._embedded.custom_fields);
-		return acc;
-	}, []);
+		const customFields = cfResponseData.reduce((acc: ICustomField[], response) => {
+			acc.push(...response._embedded.custom_fields);
+			return acc;
+		}, []);
 
-	if (!customFields?.length) {
-		throw new NodeOperationError(this.getNode(), 'No data got returned');
-	}
+		if (!customFields?.length) {
+			throw new NodeOperationError(this.getNode(), 'No data got returned');
+		}
 
-	return customFields.map((field) => ({
-		name: `${field.name} (${field.type})`,
-		value: JSON.stringify({ id: field.id, type: field.type }),
-	}));
-}
+		return customFields.map((field) => ({
+			name: `${field.name} (${field.type})`,
+			value: JSON.stringify({ id: field.id, type: field.type }),
+		}));
+	},
+);
 
-export async function getCatalogCustomFields(
+export const getCatalogCustomFields = cacheOptionsRequest(async function getCatalogCustomFields(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const catalog_id = await this.getNodeParameter('catalog_id', 0);
@@ -261,9 +274,11 @@ export async function getCatalogCustomFields(
 		name: `${field.name} (${field.type})`,
 		value: JSON.stringify({ id: field.id, type: field.type }),
 	}));
-}
+});
 
-export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export const getLossReasons = cacheOptionsRequest(async function getLossReasons(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
 	const accSettingsData: IAccount = await apiRequest.call(this, 'GET', 'account', {});
 	if (!accSettingsData.is_loss_reason_enabled) return [];
 
@@ -283,14 +298,16 @@ export async function getLossReasons(this: ILoadOptionsFunctions): Promise<INode
 		name: field.name,
 		value: field.id,
 	}));
-}
+});
 
 // export async function getSources(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 // const sources = await apiRequest.call(this, 'GET', 'sources', {});
 // 	return [];
 // }
 
-export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export const getTags = cacheOptionsRequest(async function getTags(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
 	const resource = await this.getNodeParameter('resource', 0);
 
 	if (!resource) {
@@ -318,9 +335,11 @@ export async function getTags(this: ILoadOptionsFunctions): Promise<INodePropert
 		name: field.name.length > 30 ? `${field.name.slice(0, 30)}...` : field.name,
 		value: field.id,
 	}));
-}
+});
 
-export async function getTaskTypes(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export const getTaskTypes = cacheOptionsRequest(async function getTaskTypes(
+	this: ILoadOptionsFunctions,
+): Promise<INodePropertyOptions[]> {
 	const accountInfo: IAccount = await apiRequest.call(
 		this,
 		'GET',
@@ -335,4 +354,4 @@ export async function getTaskTypes(this: ILoadOptionsFunctions): Promise<INodePr
 		name: field.name.length > 30 ? `${field.name.slice(0, 30)}...` : field.name,
 		value: field.id,
 	}));
-}
+});

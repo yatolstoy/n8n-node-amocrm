@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-amocrm",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "n8n node for amocrm Api",
   "keywords": [
     "n8n-community-node-package",
