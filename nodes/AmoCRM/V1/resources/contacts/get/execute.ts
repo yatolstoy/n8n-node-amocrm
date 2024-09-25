@@ -51,8 +51,14 @@ export async function execute(
 	if (Object.keys(filterWithoutQuery).length) {
 		qs.filter = {
 			...filterWithoutQuery,
-			id: filterWithoutQuery.id?.split(',').map((el) => Number(el.trim())),
-			name: filterWithoutQuery.name?.split(',').map((el) => String(el.trim())),
+			id: filterWithoutQuery.id
+				?.toString()
+				.split(',')
+				.map((el) => Number(el.trim())),
+			name: filterWithoutQuery.name
+				?.toString()
+				.split(',')
+				.map((el) => String(el.trim())),
 			created_at: makeRangeProperty(filterWithoutQuery.created_at?.dateRangeCustomProperties),
 			updated_at: makeRangeProperty(filterWithoutQuery.updated_at?.dateRangeCustomProperties),
 			closest_task_at: makeRangeProperty(

@@ -36,8 +36,14 @@ export async function execute(
 	if (Object.keys(filter).length) {
 		qs.filter = {
 			...filter,
-			id: filter.id?.split(',').map((el) => Number(el.trim())),
-			entity_id: filter.entity_id?.split(',').map((el) => Number(el.trim())),
+			id: filter.id
+				?.toString()
+				.split(',')
+				.map((el) => Number(el.trim())),
+			entity_id: filter.entity_id
+				?.toString()
+				.split(',')
+				.map((el) => Number(el.trim())),
 			note_type: filter.note_type,
 			updated_at: makeRangeProperty(filter.updated_at?.dateRangeCustomProperties),
 		} as IFilter;

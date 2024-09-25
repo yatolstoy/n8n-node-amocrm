@@ -27,7 +27,10 @@ export async function execute(
 
 	if (Object.keys(filterWithoutQuery).length) {
 		qs.filter = {
-			id: filterWithoutQuery.id?.split(',').map((el) => Number(el.trim())),
+			id: filterWithoutQuery.id
+				?.toString()
+				.split(',')
+				.map((el) => Number(el.trim())),
 		} as IFilter;
 	}
 
