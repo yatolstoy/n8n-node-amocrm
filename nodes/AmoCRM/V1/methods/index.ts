@@ -35,16 +35,17 @@ export const getPipelines = cacheOptionsRequest(async function getPipelines(
 });
 
 async function getAllStatuses(this: ILoadOptionsFunctions): Promise<IStatus[]> {
-	const pipelinesResponseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
-	if (!pipelinesResponseData?._embedded?.pipelines) {
+	const pipelinesResponseData = await getPipelines.call(this);
+	// const pipelinesResponseData = await apiRequest.call(this, 'GET', 'leads/pipelines', {});
+	if (!pipelinesResponseData.length) {
 		throw new NodeOperationError(this.getNode(), 'No data got returned');
 	}
 	const resultArray: IStatus[] = [];
-	for (const pipeline of pipelinesResponseData._embedded.pipelines) {
+	for (const pipeline of pipelinesResponseData) {
 		const responseData = await apiRequest.call(
 			this,
 			'GET',
-			`leads/pipelines/${pipeline.id}/statuses`,
+			`leads/pipelines/${pipeline.value}/statuses`,
 			{},
 		);
 		const statuses: IStatus[] = responseData?._embedded?.statuses.map((s: IStatus) => ({
@@ -69,6 +70,7 @@ export const getStatusesWithoutUnsorted = cacheOptionsRequest(
 		this: ILoadOptionsFunctions,
 	): Promise<INodePropertyOptions[]> {
 		const statuses = await getAllStatuses.call(this);
+
 		return [
 			{ name: 'Not Selected', value: 0 },
 			...statuses.filter((s) => !s.type).map(statusPropertyOptions),
