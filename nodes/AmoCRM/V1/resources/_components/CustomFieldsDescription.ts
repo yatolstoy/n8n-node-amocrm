@@ -72,6 +72,7 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 			if (typeof cf.value === 'object') {
 				return [...acc, { field_id: data.id, values: cf.value }];
 			}
+
 			if (
 				typeof cf.value === 'string' &&
 				isJson(cf.value) &&
@@ -195,10 +196,16 @@ export const makeCustomFieldReqObject = (customFieldsValues: ICustomFieldValuesF
 				case 'supplier':
 					value = JSON.parse(cf.value);
 					break;
+				case 'tracking_data':
+					value = JSON.parse(cf.value);
+					break;
 				default:
 					break;
 			}
-			if (typeof value === 'undefined' && !enum_id && !enum_code) return acc;
+			if (!enum_id && !enum_code) {
+				if (typeof value === 'undefined') return acc;
+				if (value === '') return acc;
+			}
 			const existRecord = acc.filter((el) => el.field_id === data.id);
 			if (existRecord.length) {
 				const values = [...existRecord[0].values, { value, enum_id, enum_code }];
