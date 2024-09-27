@@ -8,6 +8,9 @@ import {
 	ILoadOptionsFunctions,
 	NodeOperationError,
 } from 'n8n-workflow';
+import { Lock } from 'async-await-mutex-lock';
+
+const lock = new Lock();
 export async function apiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	method: IHttpRequestMethods,
@@ -30,6 +33,7 @@ export async function apiRequest(
 		},
 	};
 	try {
+		await lock.acquire();
 		return await this.helpers.httpRequestWithAuthentication.call(this, credentialType, options);
 	} catch (e) {
 		const concreteErrorsDescription = e.cause?.response?.data['validation-errors'];
@@ -38,6 +42,8 @@ export async function apiRequest(
 				description: JSON.stringify(concreteErrorsDescription, null, 2),
 			});
 		throw e;
+	} finally {
+		lock.release();
 	}
 }
 
