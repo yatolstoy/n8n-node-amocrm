@@ -20,7 +20,7 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
-		default: '',
+		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getPipelines',
 		},
@@ -32,7 +32,7 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
-		default: '',
+		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getStatusesWithoutUnsorted',
 		},
@@ -101,7 +101,7 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
-		default: '',
+		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getLossReasons',
 		},

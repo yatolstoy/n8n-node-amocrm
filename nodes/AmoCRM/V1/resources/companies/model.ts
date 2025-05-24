@@ -18,7 +18,7 @@ const modelDescription: INodeProperties[] = [
 		displayName: 'Responsible User Name or ID',
 		name: 'responsible_user_id',
 		type: 'options',
-		default: '',
+		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsers',
 		},
@@ -30,7 +30,7 @@ const modelDescription: INodeProperties[] = [
 		displayName: 'Created by User Name or ID',
 		name: 'created_by',
 		type: 'options',
-		default: '',
+		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsers',
 		},
@@ -42,7 +42,7 @@ const modelDescription: INodeProperties[] = [
 		displayName: 'Updated by User Name or ID',
 		name: 'updated_by',
 		type: 'options',
-		default: '',
+		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsers',
 		},
