@@ -62,7 +62,7 @@ export const description: ILeadsProperties = [
 				'Select statuses. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 			options: [],
 			typeOptions: {
-				loadOptionsMethod: 'getStatuses',
+				loadOptionsMethod: 'getStatusesWithPipeline',
 			},
 			noDataExpression: true,
 		},

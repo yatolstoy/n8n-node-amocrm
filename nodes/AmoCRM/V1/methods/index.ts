@@ -57,11 +57,17 @@ async function getAllStatuses(this: ILoadOptionsFunctions): Promise<IStatus[]> {
 	return resultArray;
 }
 
-export const getStatuses = cacheOptionsRequest(async function getStatuses(
+export const getStatusesWithPipeline = cacheOptionsRequest(async function getStatusesWithPipeline(
 	this: ILoadOptionsFunctions,
 ): Promise<INodePropertyOptions[]> {
 	const statuses = await getAllStatuses.call(this);
-	if (statuses) return statuses.map(statusPropertyOptions);
+	if (statuses)
+		return statuses.map(
+			(s: IStatus): INodePropertyOptions => ({
+				name: `${s.name} (${s.pipeline_name})`,
+				value: `${s.pipeline_id}_${s.id}`,
+			}),
+		);
 	return [];
 });
 

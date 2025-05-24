@@ -27,7 +27,7 @@ interface FilterFromFrontend {
 		rangeCustom: INumRange;
 	};
 	pipelines?: number[];
-	statuses?: number[];
+	statuses?: string[];
 	created_by?: number[];
 	updated_by?: number[];
 	responsible_user_id?: number[];
@@ -80,6 +80,11 @@ export async function execute(
 			closed_at: makeRangeProperty(filterWithoutQuery.closed_at?.dateRangeCustomProperties),
 			pipeline_id: filterWithoutQuery.pipelines || undefined,
 			pipelines: undefined,
+			statuses:
+				filterWithoutQuery.statuses?.map((el) => ({
+					pipeline_id: Number(el.split('_')[0]),
+					status_id: Number(el.split('_')[1]),
+				})) || undefined,
 		} as IFilter;
 	}
 
