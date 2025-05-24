@@ -78,6 +78,8 @@ export async function execute(
 				filterWithoutQuery.closest_task_at?.dateRangeCustomProperties,
 			),
 			closed_at: makeRangeProperty(filterWithoutQuery.closed_at?.dateRangeCustomProperties),
+			pipeline_id: filterWithoutQuery.pipelines || undefined,
+			pipelines: undefined,
 		} as IFilter;
 	}
 
