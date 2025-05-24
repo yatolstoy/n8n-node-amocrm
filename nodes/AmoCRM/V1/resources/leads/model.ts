@@ -20,6 +20,7 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getPipelines',
@@ -32,6 +33,7 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getStatusesWithoutUnsorted',
@@ -101,6 +103,7 @@ const modelDescription: INodeProperties[] = [
 		type: 'options',
 		description:
 			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getLossReasons',

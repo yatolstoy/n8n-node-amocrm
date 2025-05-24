@@ -18,6 +18,7 @@ const modelDescription: INodeProperties[] = [
 		displayName: 'Responsible User Name or ID',
 		name: 'responsible_user_id',
 		type: 'options',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsers',
@@ -30,6 +31,7 @@ const modelDescription: INodeProperties[] = [
 		displayName: 'Created by User Name or ID',
 		name: 'created_by',
 		type: 'options',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsers',
@@ -42,6 +44,7 @@ const modelDescription: INodeProperties[] = [
 		displayName: 'Updated by User Name or ID',
 		name: 'updated_by',
 		type: 'options',
+		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-options
 		default: [],
 		typeOptions: {
 			loadOptionsMethod: 'getActiveUsers',
